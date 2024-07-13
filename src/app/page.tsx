@@ -1,11 +1,11 @@
-import { Button } from "~/components/ui/button";
+import { Navbar } from "~/components/navbar";
 import { HydrateClient } from "~/trpc/server";
 
 export default async function Home() {
   return (
     <HydrateClient>
       <main>
-        <Button>Hello Button</Button>
+        <Navbar />
       </main>
     </HydrateClient>
   );
