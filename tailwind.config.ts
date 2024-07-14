@@ -18,6 +18,13 @@ const config = {
       },
     },
     extend: {
+      fontSize: {
+        "4xl": "127px",
+        "3xl": "32px",
+      },
+      fontFamily: {
+        arial: ["Arial", "Helvetica", "sans-serif"],
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
