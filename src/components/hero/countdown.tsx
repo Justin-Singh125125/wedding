@@ -5,20 +5,31 @@ import { Typography } from "~/components/ui/typography";
 
 const targetDate = "2025-06-28T00:00:00";
 
-const calculateTimeLeft = () => {
+type CountdownState = {
+  months: number;
+  weeks: number;
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+};
+
+const initialCountdownState: CountdownState = {
+  months: 0,
+  weeks: 0,
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+};
+
+const calculateTimeLeft = (): CountdownState => {
   const now = new Date();
   const target = new Date(targetDate);
   const totalSeconds = Math.floor((target.getTime() - now.getTime()) / 1000);
 
   if (totalSeconds <= 0) {
-    return {
-      months: 0,
-      weeks: 0,
-      days: 0,
-      hours: 0,
-      minutes: 0,
-      seconds: 0,
-    };
+    return initialCountdownState;
   }
 
   const months = Math.floor(totalSeconds / (30 * 24 * 60 * 60));
@@ -57,7 +68,9 @@ const CountdownItem = ({ label, value }: CountdownItemProps) => {
 };
 
 export const Countdown = () => {
-  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+  const [timeLeft, setTimeLeft] = useState<CountdownState>(
+    initialCountdownState,
+  );
 
   const updateCountdown = () => {
     const timer = setInterval(() => {
