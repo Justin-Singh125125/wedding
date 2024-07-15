@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "../ui/button";
 import HeroImage from "./hero.image.jpg";
 import Image from "next/image";
