@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "../ui/button";
 import HeroImage from "./hero.image.jpg";
 import Image from "next/image";
@@ -10,7 +12,7 @@ export const Hero = () => {
       <Image
         className="h-full w-full object-cover"
         src={HeroImage}
-        layout="fill"
+        fill
         alt="Picture of the author"
       />
 
