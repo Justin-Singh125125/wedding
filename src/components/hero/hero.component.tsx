@@ -13,7 +13,7 @@ export const Hero = () => {
         alt="Picture of the author"
       />
 
-      <div className="absolute grid h-full w-full items-start justify-center">
+      <div className="absolute grid h-full w-full items-start justify-center p-32">
         <div className="flex flex-col gap-4 text-center">
           <Typography variant="h1" className="text-white">
             SHE SAID YES!
