@@ -8,9 +8,6 @@ export const Navbar = () => {
           Home
         </Link>
         <Link href="#" className="text-white">
-          Countdown
-        </Link>
-        <Link href="#" className="text-white">
           RSVP
         </Link>
         <Link href="#" className="text-white">
