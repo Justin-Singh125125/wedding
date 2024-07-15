@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Typography } from "~/components/ui/typography";
 
-const targetDate = "2024-07-14T20:00:00";
+const targetDate = "2025-06-28T00:00:00";
 
 const calculateTimeLeft = () => {
   const now = new Date();
