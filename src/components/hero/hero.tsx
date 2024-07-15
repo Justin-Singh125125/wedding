@@ -2,7 +2,7 @@ import { Button } from "../ui/button";
 import HeroImage from "./hero.image.jpg";
 import Image from "next/image";
 import { Typography } from "../ui/typography";
-import { Countdown } from "./components/countdown";
+import { Countdown } from "./countdown";
 
 export const Hero = () => {
   return (
