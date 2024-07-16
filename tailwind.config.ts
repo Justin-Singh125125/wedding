@@ -18,6 +18,14 @@ const config = {
       },
     },
     extend: {
+      colors: {
+        primary: {
+          400: "#CAA58D",
+        },
+        secondary: { 400: "#95B4D3" },
+        tertiary: { 400: "#fff" },
+        quatinary: { 400: "#eec64f" },
+      },
       fontSize: {
         "4xl": "127px",
         "3xl": "32px",
