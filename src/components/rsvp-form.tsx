@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "./ui/button";
@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
+import { Checkbox } from "./ui/checkbox";
 
 const rsvpFormSchema = z.object({
   name: z.string().min(1, "Required."),
@@ -39,6 +40,10 @@ export function RSVPForm() {
   });
 
   const onSubmit: SubmitHandler<RSVPFormValues> = (data) => console.log(data);
+
+  const watchedFields = form.watch();
+
+  console.log(watchedFields);
 
   return (
     <Form {...form}>
@@ -84,6 +89,22 @@ export function RSVPForm() {
                 <Input {...field} />
               </FormControl>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="isPlusOne"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Plus One ?</FormLabel>
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
             </FormItem>
           )}
         />
