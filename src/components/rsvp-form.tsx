@@ -1,59 +1,96 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "./ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "./ui/form";
+import { Input } from "./ui/input";
 
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
+const rsvpFormSchema = z.object({
+  name: z.string().min(1, "Required."),
+  email: z.string().email().min(1, "Required."),
+  phone: z.string().min(1, "Required."),
+  isPlusOne: z.boolean(),
 });
 
+type RSVPFormValues = z.infer<typeof rsvpFormSchema>;
+
+const defaultValues: RSVPFormValues = {
+  name: "",
+  email: "",
+  phone: "",
+  isPlusOne: false,
+};
+
 export function RSVPForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-    },
+  const form = useForm<RSVPFormValues>({
+    resolver: zodResolver(rsvpFormSchema),
+    mode: "onBlur",
+    defaultValues,
   });
+
+  const onSubmit: SubmitHandler<RSVPFormValues> = (data) => console.log(data);
 
   return (
     <Form {...form}>
       <form
-        onSubmit={() => {
-          console.log("test");
-        }}
-        className="space-y-8"
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="grid grid-cols-2 gap-4"
       >
         <FormField
           control={form.control}
-          name="username"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>FirstName</FormLabel>
               <FormControl>
-                <input placeholder="shadcn" {...field} />
+                <Input {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <footer className="col-span-full">
+          <Button type="submit">Submit</Button>
+        </footer>
       </form>
     </Form>
   );
