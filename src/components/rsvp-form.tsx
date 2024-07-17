@@ -1,21 +1,14 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { type SubmitHandler, useForm, Controller } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button } from "./ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "./ui/form";
-import { Input } from "./ui/input";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
 import { Checkbox } from "./ui/checkbox";
 import { FormInputField } from "./ui/form-input-field";
+import { Combobox } from "./ui/combo-box";
 
 const rsvpFormSchema = z.object({
   name: z.string().min(1, "Required."),
@@ -48,13 +41,14 @@ export function RSVPForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="grid grid-cols-2 gap-4"
       >
-        <FormField
+        <Combobox />
+        {/* <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
             <FormInputField label="Name" placeholder="Justin" {...field} />
           )}
-        />
+        /> */}
 
         <FormField
           control={form.control}
