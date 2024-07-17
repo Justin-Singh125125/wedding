@@ -15,6 +15,7 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
+import { FormInputField } from "./ui/form-input-field";
 
 const rsvpFormSchema = z.object({
   name: z.string().min(1, "Required."),
@@ -41,10 +42,6 @@ export function RSVPForm() {
 
   const onSubmit: SubmitHandler<RSVPFormValues> = (data) => console.log(data);
 
-  const watchedFields = form.watch();
-
-  console.log(watchedFields);
-
   return (
     <Form {...form}>
       <form
@@ -55,13 +52,7 @@ export function RSVPForm() {
           control={form.control}
           name="name"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>FirstName</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <FormInputField label="Name" placeholder="Justin" {...field} />
           )}
         />
 
@@ -69,13 +60,11 @@ export function RSVPForm() {
           control={form.control}
           name="phone"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <FormInputField
+              label="Phone"
+              placeholder="555-555-5555"
+              {...field}
+            />
           )}
         />
 
@@ -83,13 +72,11 @@ export function RSVPForm() {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
+            <FormInputField
+              label="Email"
+              placeholder="example@gmail.com"
+              {...field}
+            />
           )}
         />
 
