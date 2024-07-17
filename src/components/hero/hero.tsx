@@ -12,6 +12,7 @@ export const Hero = () => {
         src={HeroImage}
         fill
         alt="Picture of the author"
+        priority
       />
 
       <div className="absolute grid h-full w-full items-start justify-center p-14">
