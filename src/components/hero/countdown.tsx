@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Typography } from "~/components/ui/typography";
+import { CountdownItem } from "./countdown-item";
 
 const targetDate = "2025-06-28T00:00:00";
 
@@ -49,30 +49,14 @@ const calculateTimeLeft = (): CountdownState => {
   };
 };
 
-type CountdownItemProps = {
-  label: string;
-  value: string;
-};
-
-const CountdownItem = ({ label, value }: CountdownItemProps) => {
-  return (
-    <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-primary-400 p-4">
-      <Typography variant="h2" className="text-white">
-        {value}
-      </Typography>
-      <Typography variant="h2" className="text-base text-white">
-        {label}
-      </Typography>
-    </div>
-  );
-};
-
 export const Countdown = () => {
   const [timeLeft, setTimeLeft] = useState<CountdownState>(
     initialCountdownState,
   );
 
-  const updateCountdown = () => {
+  const startCountdown = () => {
+    setTimeLeft(calculateTimeLeft());
+
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
@@ -80,7 +64,7 @@ export const Countdown = () => {
     return () => clearInterval(timer);
   };
 
-  useEffect(updateCountdown, []);
+  useEffect(startCountdown, []);
 
   return (
     <div className="flex justify-center gap-4">
