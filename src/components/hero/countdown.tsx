@@ -56,7 +56,7 @@ type CountdownItemProps = {
 
 const CountdownItem = ({ label, value }: CountdownItemProps) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-slate-900 p-4">
+    <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-primary-400 p-4">
       <Typography variant="h2" className="text-white">
         {value}
       </Typography>
