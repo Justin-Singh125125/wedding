@@ -8,7 +8,7 @@ export const RSVPSection = () => {
         RSVP
       </Typography>
 
-      <div className="grid grid-cols-2">
+      <div className="mt-4 flex justify-center gap-4">
         <RSVPForm />
       </div>
     </section>
