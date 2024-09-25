@@ -1,0 +1,1 @@
+export const TARGET_DATE = new Date("2025-09-20T17:00:00");

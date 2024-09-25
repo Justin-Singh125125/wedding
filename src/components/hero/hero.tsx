@@ -4,6 +4,18 @@ import Image from "next/image";
 import { Typography } from "../ui/typography";
 import { Countdown } from "./countdown";
 
+import { TARGET_DATE } from "~/constants";
+
+const formattedDate = TARGET_DATE.toLocaleString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+  hour12: true
+});
+
+
 export const Hero = () => {
   return (
     <div className="relative h-screen w-screen overflow-hidden">
@@ -24,7 +36,7 @@ export const Hero = () => {
           <Countdown />
 
           <Typography variant="h2" className="font-light text-white">
-            Sep 23, 2035, 7:00 PM St.| Peter&apos;s Hall
+            {formattedDate} | Wolfe Heights
           </Typography>
 
           <div>

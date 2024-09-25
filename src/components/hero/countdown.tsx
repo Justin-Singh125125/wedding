@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { CountdownItem } from "./countdown-item";
-
-const targetDate = "2025-06-28T00:00:00";
+import { TARGET_DATE } from "~/constants";
 
 type CountdownState = {
   months: number;
@@ -25,8 +24,7 @@ const initialCountdownState: CountdownState = {
 
 const calculateTimeLeft = (): CountdownState => {
   const now = new Date();
-  const target = new Date(targetDate);
-  const totalSeconds = Math.floor((target.getTime() - now.getTime()) / 1000);
+  const totalSeconds = Math.floor((TARGET_DATE.getTime() - now.getTime()) / 1000);
 
   if (totalSeconds <= 0) {
     return initialCountdownState;
