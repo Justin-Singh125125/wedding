@@ -5,16 +5,16 @@ import { Typography } from "../ui/typography";
 import { Countdown } from "./countdown";
 
 import { TARGET_DATE } from "~/constants";
+import { Link } from "../ui/link";
 
-const formattedDate = TARGET_DATE.toLocaleString('en-US', {
-  year: 'numeric',
-  month: 'short',
-  day: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
-  hour12: true
+const formattedDate = TARGET_DATE.toLocaleString("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  hour12: true,
 });
-
 
 export const Hero = () => {
   return (
@@ -39,9 +39,9 @@ export const Hero = () => {
             {formattedDate} | Wolfe Heights
           </Typography>
 
-          <div>
+          <Link href="#rsvp">
             <Button>RSVP</Button>
-          </div>
+          </Link>
         </div>
       </div>
     </div>
