@@ -6,7 +6,8 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import { PlusCircle } from "lucide-react";
+import { Heart, XIcon } from "lucide-react";
+import { useEffect } from "react";
 
 const guestSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -18,7 +19,7 @@ const formSchema = z.object({
   lastName: z.string().min(1, "Last name is required"),
   phone: z.string().min(10, "Phone enter a valid phone number"),
   email: z.string().email("Please enter a valid email address"),
-  guestType: z.enum(["plus1", "family"]),
+  guestType: z.enum(["none", "plus1", "family"]),
   plusOne: z
     .object({
       firstName: z.string().min(1, "First name is required"),
@@ -55,6 +56,7 @@ export const RSVPForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       familyMembers: [{ firstName: "", lastName: "" }],
+      guestType: "none",
     },
   });
 
@@ -71,8 +73,12 @@ export const RSVPForm = () => {
   const watchGuestType = watch("guestType");
   const watchPhone = watch("phone");
 
+  useEffect(() => {
+    setValue("phone", formatPhoneNumber(watchPhone));
+  }, [setValue, watchPhone]);
+
   return (
-    <div className="w-1/2 rounded-lg bg-white p-6 shadow-2xl">
+    <div className="w-full rounded-lg bg-white p-6 shadow-2xl">
       <h2 className="mb-6 text-center text-2xl font-bold text-primary-400">
         RSVP
       </h2>
@@ -102,7 +108,6 @@ export const RSVPForm = () => {
           label="Phone Number"
           placeholder="(916) 955-8073"
           error={errors.phone?.message}
-          value={formatPhoneNumber(watchPhone)}
           {...register("phone")}
         />
 
@@ -123,8 +128,17 @@ export const RSVPForm = () => {
             render={({ field }) => (
               <RadioGroup
                 onValueChange={field.onChange}
+                value={field.value}
                 className="flex space-x-4"
               >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value="none"
+                    id="none"
+                    className="text-primary-400"
+                  />
+                  <Label htmlFor="none">None</Label>
+                </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem
                     value="plus1"
@@ -133,6 +147,7 @@ export const RSVPForm = () => {
                   />
                   <Label htmlFor="plus1">Plus One</Label>
                 </div>
+
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem
                     value="family"
@@ -169,16 +184,15 @@ export const RSVPForm = () => {
         )}
         {watchGuestType === "family" && (
           <>
-            <div className="col-span-full">
+            <div className="col-span-full space-y-4">
               {fields.map((field, index) => (
-                <div key={field.id}>
-                  <Label className="mb-2 block text-secondary-400">
+                <div key={field.id} className="space-y-4">
+                  <Label className="block text-secondary-400">
                     Family Member {index + 1}
                   </Label>
 
-                  <div className="flex w-full gap-4">
+                  <div className="flex gap-4">
                     <Input
-                      className="flex-1"
                       id={`familyMembers.${index}.firstName`}
                       placeholder="Justin"
                       error={errors.familyMembers?.[index]?.firstName?.message}
@@ -186,12 +200,20 @@ export const RSVPForm = () => {
                     />
 
                     <Input
-                      className="flex-1"
                       id={`familyMembers.${index}.lastName`}
                       placeholder="Singh"
                       error={errors.familyMembers?.[index]?.lastName?.message}
                       {...register(`familyMembers.${index}.lastName` as const)}
                     />
+
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      onClick={() => remove(index)}
+                      className="px-2"
+                    >
+                      <XIcon className="h-4 w-4" />
+                    </Button>
                   </div>
                 </div>
               ))}
@@ -202,7 +224,8 @@ export const RSVPForm = () => {
               onClick={() => append({ firstName: "", lastName: "" })}
               className="col-span-full"
             >
-              <PlusCircle className="mr-2 h-4 w-4" /> Add Family Member
+              <Heart className="mr-2 h-4 w-4" />
+              Add Guest
             </Button>
           </>
         )}
