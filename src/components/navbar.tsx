@@ -7,10 +7,10 @@ export const Navbar = () => {
         <Link href="#home" className="text-white">
           Home
         </Link>
-        <Link href="#" className="text-white">
+        <Link href="#rsvp" className="text-white">
           RSVP
         </Link>
-        <Link href="#" className="text-white">
+        <Link href="#registry" className="text-white">
           Registry
         </Link>
       </nav>
