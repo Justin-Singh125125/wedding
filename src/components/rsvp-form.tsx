@@ -56,7 +56,7 @@ const formSchema = Yup.object().shape({
         )
         .min(
           1,
-          'At least 1 guest is required. Press the "Add Guest" button. If you do not have any guests select "None" option',
+          'At least 1 guest is required. Press the "Add Family Member" button. If you do not have any guests select "None" option',
         ),
     otherwise: () => Yup.array().notRequired(),
   }),
