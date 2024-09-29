@@ -4,6 +4,7 @@ import * as React from "react";
 
 import { cn } from "~/lib/utils";
 import { Label } from "./label";
+import { ErrorCaption } from "./error-caption";
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -33,7 +34,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
 
-        {error && <p className="text-sm text-red-500">{error}</p>}
+        <ErrorCaption error={error} />
       </div>
     );
   },

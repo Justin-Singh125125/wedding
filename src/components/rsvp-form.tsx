@@ -1,37 +1,66 @@
 "use client";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Heart, XIcon } from "lucide-react";
 import { useEffect } from "react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import { ErrorCaption } from "./ui/error-caption";
 
-const guestSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
+type FormValues = {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  guestType: "none" | "plus1" | "family";
+  plusOne: {
+    firstName: string;
+    lastName: string;
+  };
+  familyMembers: Array<{ firstName: string; lastName: string }>;
+};
+
+const formSchema = Yup.object().shape({
+  firstName: Yup.string().required("First name is required"),
+  lastName: Yup.string().required("Last name is required"),
+  phone: Yup.string()
+    .min(14, "Phone number must be 10 digits")
+    .required("Phone number is required"),
+  email: Yup.string()
+    .email("Please enter a valid email address")
+    .required("Email is required"),
+  guestType: Yup.string()
+    .oneOf(["none", "plus1", "family"], "Invalid guest type")
+    .required("Guest type is required"),
+  plusOne: Yup.object().when("guestType", {
+    is: "plus1",
+    then: () =>
+      Yup.object({
+        firstName: Yup.string().required("First name is required"),
+        lastName: Yup.string().required("Last name is required"),
+      }),
+    otherwise: () => Yup.object().notRequired(),
+  }),
+  familyMembers: Yup.object().when("guestType", {
+    is: "family",
+    then: () =>
+      Yup.array()
+        .of(
+          Yup.object().shape({
+            firstName: Yup.string().required("First name is required"),
+            lastName: Yup.string().required("Last name is required"),
+          }),
+        )
+        .min(
+          1,
+          'At least 1 guest is required. Press the "Add Guest" button. If you do not have any guests select "None" option',
+        ),
+    otherwise: () => Yup.array().notRequired(),
+  }),
 });
-
-const formSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  phone: z.string().min(10, "Phone enter a valid phone number"),
-  email: z.string().email("Please enter a valid email address"),
-  guestType: z.enum(["none", "plus1", "family"]),
-  plusOne: z
-    .object({
-      firstName: z.string().min(1, "First name is required"),
-      lastName: z.string().min(1, "Last name is required"),
-    })
-    .optional(),
-  familyMembers: z
-    .array(guestSchema)
-    .min(1, "At least one family member is required"),
-});
-
-type FormValues = z.infer<typeof formSchema>;
 
 const formatPhoneNumber = (value: string) => {
   if (!value) return value;
@@ -44,6 +73,16 @@ const formatPhoneNumber = (value: string) => {
   return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}-${phoneNumber.slice(6, 10)}`;
 };
 
+const defaultValues: FormValues = {
+  firstName: "",
+  lastName: "",
+  phone: "",
+  email: "",
+  guestType: "none",
+  plusOne: { firstName: "", lastName: "" },
+  familyMembers: [],
+};
+
 export const RSVPForm = () => {
   const {
     register,
@@ -53,11 +92,9 @@ export const RSVPForm = () => {
     watch,
     setValue,
   } = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      familyMembers: [{ firstName: "", lastName: "" }],
-      guestType: "none",
-    },
+    // @ts-expect-error - yup is literally so annoying to strongly type. You are just gonna have to trust me bro.
+    resolver: yupResolver(formSchema),
+    defaultValues,
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -159,9 +196,8 @@ export const RSVPForm = () => {
               </RadioGroup>
             )}
           />
-          {errors.guestType && (
-            <p className="text-sm text-red-500">{errors.guestType.message}</p>
-          )}
+
+          <ErrorCaption error={errors.guestType?.message} />
         </div>
         {watchGuestType === "plus1" && (
           <div className="col-span-full grid grid-cols-2 gap-4">
@@ -184,6 +220,7 @@ export const RSVPForm = () => {
         )}
         {watchGuestType === "family" && (
           <>
+            <ErrorCaption error={errors.familyMembers?.message} />
             <div className="col-span-full space-y-4">
               {fields.map((field, index) => (
                 <div key={field.id} className="space-y-4">
@@ -225,7 +262,7 @@ export const RSVPForm = () => {
               className="col-span-full"
             >
               <Heart className="mr-2 h-4 w-4" />
-              Add Guest
+              Add Family Member
             </Button>
           </>
         )}
