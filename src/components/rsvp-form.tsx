@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { ErrorCaption } from "./ui/error-caption";
+import { api } from "../trpc/react";
 
 type FormValues = {
   firstName: string;
@@ -102,9 +103,22 @@ export const RSVPForm = () => {
     name: "familyMembers",
   });
 
+  const mutation = api.guest.create.useMutation();
+
   const onSubmit = (data: FormValues) => {
     console.log(data);
-    // Handle form submission here
+
+    mutation.mutate({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      guestType: data.guestType,
+      email: data.email,
+      phoneNumber: data.phone,
+      plusOne: {
+        firstName: data.plusOne.firstName,
+        lastName: data.plusOne.lastName,
+      },
+    });
   };
 
   const watchGuestType = watch("guestType");
@@ -113,6 +127,14 @@ export const RSVPForm = () => {
   useEffect(() => {
     setValue("phone", formatPhoneNumber(watchPhone));
   }, [setValue, watchPhone]);
+
+  if (mutation.isPending) {
+    return "Submitting...";
+  }
+
+  if (mutation.isSuccess) {
+    return "Submitted!";
+  }
 
   return (
     <div className="w-full rounded-lg bg-white p-6 shadow-2xl">
