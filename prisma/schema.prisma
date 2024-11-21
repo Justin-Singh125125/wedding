@@ -10,11 +10,36 @@ datasource db {
     url      = env("POSTGRES_URL")
 }
 
-model Post {
+model Guest {
+    id            Int            @id @default(autoincrement())
+    firstName     String
+    lastName      String
+    phoneNumber   String
+    email         String
+    createdAt     DateTime       @default(now())
+    updatedAt     DateTime       @updatedAt
+    plusOne       PlusOne?
+    familyMembers FamilyMember[]
+}
+
+model PlusOne {
     id        Int      @id @default(autoincrement())
-    name      String
+    firstName String
+    lastName  String
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    @@index([name])
+    guest   Guest @relation(fields: [guestId], references: [id], onDelete: Cascade)
+    guestId Int   @unique
+}
+
+model FamilyMember {
+    id        Int      @id @default(autoincrement())
+    firstName String
+    lastName  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    guest   Guest @relation(fields: [guestId], references: [id], onDelete: Cascade)
+    guestId Int
 }
