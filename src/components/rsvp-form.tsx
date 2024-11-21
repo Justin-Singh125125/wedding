@@ -10,6 +10,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import { ErrorCaption } from "./ui/error-caption";
 import { api } from "../trpc/react";
+import { useToast } from "~/hooks/use-toast";
+import { ThankYouRSVP } from "./thank-you-rsvp";
 
 type FormValues = {
   firstName: string;
@@ -85,6 +87,8 @@ const defaultValues: FormValues = {
 };
 
 export const RSVPForm = () => {
+  const { toast } = useToast();
+
   const {
     register,
     control,
@@ -106,21 +110,34 @@ export const RSVPForm = () => {
   const mutation = api.guest.create.useMutation();
 
   const onSubmit = (data: FormValues) => {
-    mutation.mutate({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      guestType: data.guestType,
-      email: data.email,
-      phoneNumber: data.phone,
-      plusOne:
-        data.guestType === "plus1"
-          ? {
-              firstName: data.plusOne.firstName,
-              lastName: data.plusOne.lastName,
-            }
-          : undefined,
-      familyMembers: data.familyMembers,
-    });
+    mutation.mutate(
+      {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        guestType: data.guestType,
+        email: data.email,
+        phoneNumber: data.phone,
+        plusOne:
+          data.guestType === "plus1"
+            ? {
+                firstName: data.plusOne.firstName,
+                lastName: data.plusOne.lastName,
+              }
+            : undefined,
+        familyMembers: data.familyMembers,
+      },
+
+      {
+        onError: () => {
+          toast({
+            variant: "destructive",
+            title: "Oops! Justin did something wrong.",
+            description:
+              "There was an issue submitting your RSVP. Please try again or reach out to Justin at 916-955-8073 for assistance. \n",
+          });
+        },
+      },
+    );
   };
 
   const watchGuestType = watch("guestType");
@@ -130,12 +147,8 @@ export const RSVPForm = () => {
     setValue("phone", formatPhoneNumber(watchPhone));
   }, [setValue, watchPhone]);
 
-  if (mutation.isPending) {
-    return "Submitting...";
-  }
-
   if (mutation.isSuccess) {
-    return "Submitted!";
+    return <ThankYouRSVP />;
   }
 
   return (
@@ -292,6 +305,7 @@ export const RSVPForm = () => {
         )}
 
         <Button
+          isLoading={mutation.isPending}
           type="submit"
           className="col-span-full w-full bg-primary-400 text-white hover:bg-primary-300"
         >
