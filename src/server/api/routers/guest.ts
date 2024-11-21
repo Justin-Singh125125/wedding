@@ -20,6 +20,12 @@ export const guestRouter = createTRPCRouter({
             lastName: z.string().min(1),
           })
           .optional(),
+        familyMembers: z.array(
+          z.object({
+            firstName: z.string().min(1),
+            lastName: z.string().min(1),
+          }),
+        ),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -31,12 +37,17 @@ export const guestRouter = createTRPCRouter({
           phoneNumber: input.phoneNumber,
           plusOne: {
             create:
-              input.guestType === "plus1"
+              input.guestType === "plus1" && input.plusOne
                 ? {
-                    firstName: input.plusOne?.firstName ?? "",
-                    lastName: input.plusOne?.lastName ?? "",
+                    firstName: input.plusOne.firstName,
+                    lastName: input.plusOne.lastName,
                   }
                 : undefined,
+          },
+          familyMembers: {
+            createMany: {
+              data: input.familyMembers.map((member) => member),
+            },
           },
         },
       });

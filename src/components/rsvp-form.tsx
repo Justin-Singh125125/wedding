@@ -106,18 +106,20 @@ export const RSVPForm = () => {
   const mutation = api.guest.create.useMutation();
 
   const onSubmit = (data: FormValues) => {
-    console.log(data);
-
     mutation.mutate({
       firstName: data.firstName,
       lastName: data.lastName,
       guestType: data.guestType,
       email: data.email,
       phoneNumber: data.phone,
-      plusOne: {
-        firstName: data.plusOne.firstName,
-        lastName: data.plusOne.lastName,
-      },
+      plusOne:
+        data.guestType === "plus1"
+          ? {
+              firstName: data.plusOne.firstName,
+              lastName: data.plusOne.lastName,
+            }
+          : undefined,
+      familyMembers: data.familyMembers,
     });
   };
 
