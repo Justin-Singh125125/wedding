@@ -16,7 +16,7 @@ const config = {
           300: "#d0af9a",
           400: "#CAA58D",
         },
-        secondary: { 400: "#95B4D3" },
+        secondary: { 400: "#c1d7ff" },
         tertiary: { 400: "#fff" },
         quatinary: { 400: "#eec64f" },
       },
