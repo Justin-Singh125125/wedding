@@ -69,7 +69,9 @@ export const Countdown = () => {
   return (
     <div className="flex justify-center gap-2 sm:gap-4">
       <CountdownItem label="Months" value={timeLeft.months.toString()} />
-      <CountdownItem label="Weeks" value={timeLeft.weeks.toString()} />
+      <div className="hidden sm:block">
+        <CountdownItem label="Weeks" value={timeLeft.weeks.toString()} />
+      </div>
       <CountdownItem label="Days" value={timeLeft.days.toString()} />
       <CountdownItem label="Hours" value={timeLeft.hours.toString()} />
       <CountdownItem label="Minutes" value={timeLeft.minutes.toString()} />
