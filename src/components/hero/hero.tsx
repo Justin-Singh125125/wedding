@@ -18,26 +18,19 @@ const formattedDate = TARGET_DATE.toLocaleString("en-US", {
 
 export const Hero = () => {
   return (
-    <div className="relative h-screen w-screen overflow-hidden">
-      <Image
-        className="h-full w-full object-cover"
-        src={HeroImage}
-        fill
-        alt="Picture of the author"
-        priority
-      />
-
-      <div className="absolute grid h-full w-full items-start justify-center p-14">
+    <div
+      className="relative h-screen w-screen overflow-hidden bg-cover bg-center text-white"
+      style={{
+        backgroundImage: `url(${HeroImage.src})`,
+      }}
+    >
+      <div className="grid h-full w-full items-start justify-center p-14">
         <div className="flex flex-col gap-4 text-center">
-          <Typography variant="h1" className="text-white">
-            SHE SAID YES!
-          </Typography>
+          {/* <h1 className="text-2xl text-white">SHE SAID YES!</h1> */}
 
           <Countdown />
 
-          <Typography variant="h2" className="font-light text-white">
-            {formattedDate} | Wolfe Heights
-          </Typography>
+          <h2 className="sm:text-3xl">{formattedDate} | Wolfe Heights</h2>
 
           <Link href="#rsvp">
             <Button>RSVP</Button>

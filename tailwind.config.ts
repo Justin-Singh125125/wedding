@@ -10,13 +10,6 @@ const config = {
   ],
   prefix: "",
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
       colors: {
         primary: {
@@ -26,10 +19,6 @@ const config = {
         secondary: { 400: "#95B4D3" },
         tertiary: { 400: "#fff" },
         quatinary: { 400: "#eec64f" },
-      },
-      fontSize: {
-        "4xl": "127px",
-        "3xl": "32px",
       },
       fontFamily: {
         arial: ["Arial", "Helvetica", "sans-serif"],

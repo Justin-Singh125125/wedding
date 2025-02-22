@@ -1,5 +1,3 @@
-import { Typography } from "../ui/typography";
-
 export type CountdownItemProps = {
   label: string;
   value: string;
@@ -7,13 +5,9 @@ export type CountdownItemProps = {
 
 export const CountdownItem = ({ label, value }: CountdownItemProps) => {
   return (
-    <div className="flex flex-col items-center justify-center gap-2 rounded-md bg-primary-400 p-4">
-      <Typography variant="h2" className="text-white">
-        {value}
-      </Typography>
-      <Typography variant="h2" className="text-base text-white">
-        {label}
-      </Typography>
+    <div className="flex flex-col items-center justify-center rounded-md bg-primary-400 px-1 py-3 sm:px-2 sm:py-4">
+      <span className="text-[0.9rem] sm:text-xl">{value}</span>
+      <span className="text-[0.9rem] sm:text-xl">{label}</span>
     </div>
   );
 };

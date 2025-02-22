@@ -8,8 +8,10 @@ export default async function Home() {
     <HydrateClient>
       <main id="#home">
         <Navbar />
+
         <Hero />
-        <RSVPSection />
+
+        {/* <RSVPSection /> */}
       </main>
     </HydrateClient>
   );

@@ -9,10 +9,8 @@ export const RSVPSection = () => {
       <p className="text-center text-xl text-gray-600">
         We can&apos;t wait to celebrate with you!
       </p>
-      <div className="mt-2 flex justify-center">
-        <div className="w-3/4">
-          <RSVPForm />
-        </div>
+      <div className="grid grid-cols-2 pt-4">
+        <RSVPForm />
       </div>
     </section>
   );
