@@ -1,7 +1,5 @@
 import { Button } from "../ui/button";
 import HeroImage from "./hero.image.jpg";
-import Image from "next/image";
-import { Typography } from "../ui/typography";
 import { Countdown } from "./countdown";
 
 import { TARGET_DATE } from "~/constants";
@@ -24,10 +22,8 @@ export const Hero = () => {
         backgroundImage: `url(${HeroImage.src})`,
       }}
     >
-      <div className="grid h-full w-full items-start justify-center p-14">
+      <div className="grid h-full w-full items-start justify-center pt-24">
         <div className="flex flex-col gap-4 text-center">
-          {/* <h1 className="text-2xl text-white">SHE SAID YES!</h1> */}
-
           <Countdown />
 
           <h2 className="sm:text-3xl">{formattedDate} | Wolfe Heights</h2>
