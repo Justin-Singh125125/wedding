@@ -7,7 +7,10 @@ export type LinkProps = BaseLinkProps & HTMLAttributes<HTMLAnchorElement>;
 export const Link = ({ children, className, ...props }: LinkProps) => {
   return (
     <BaseLink
-      className={cn("underline-offset-4 hover:underline", className)}
+      className={cn(
+        "text-[0.8rem] underline-offset-4 hover:underline sm:text-base",
+        className,
+      )}
       {...props}
     >
       {children}

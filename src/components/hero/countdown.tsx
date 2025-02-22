@@ -24,7 +24,9 @@ const initialCountdownState: CountdownState = {
 
 const calculateTimeLeft = (): CountdownState => {
   const now = new Date();
-  const totalSeconds = Math.floor((TARGET_DATE.getTime() - now.getTime()) / 1000);
+  const totalSeconds = Math.floor(
+    (TARGET_DATE.getTime() - now.getTime()) / 1000,
+  );
 
   if (totalSeconds <= 0) {
     return initialCountdownState;
@@ -65,7 +67,7 @@ export const Countdown = () => {
   useEffect(startCountdown, []);
 
   return (
-    <div className="flex justify-center gap-4">
+    <div className="flex justify-center gap-2 sm:gap-4">
       <CountdownItem label="Months" value={timeLeft.months.toString()} />
       <CountdownItem label="Weeks" value={timeLeft.weeks.toString()} />
       <CountdownItem label="Days" value={timeLeft.days.toString()} />
