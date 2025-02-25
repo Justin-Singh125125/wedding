@@ -4,5 +4,5 @@ export interface ErrorCaptionProps {
 
 export const ErrorCaption = ({ error }: ErrorCaptionProps) => {
   if (!error) return null;
-  return <p className="text-sm text-red-500">{error}</p>;
+  return <p className="text-xs text-red-500 sm:text-sm">{error}</p>;
 };

@@ -265,7 +265,7 @@ export const RSVPForm = () => {
                     Family Member {index + 1}
                   </Label>
 
-                  <div className="flex gap-4">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-[1fr_1fr_auto]">
                     <Input
                       id={`familyMembers.${index}.firstName`}
                       placeholder="Justin"
