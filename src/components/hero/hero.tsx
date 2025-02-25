@@ -1,5 +1,4 @@
 import { Button } from "../ui/button";
-import HeroImage from "./hero.image.jpg";
 import { Countdown } from "./countdown";
 
 import { TARGET_DATE } from "~/constants";
@@ -19,7 +18,7 @@ export const Hero = () => {
     <div
       className="relative h-screen w-screen overflow-hidden bg-cover bg-center text-white"
       style={{
-        backgroundImage: `url(${HeroImage.src})`,
+        backgroundImage: `url(https://cq8vqhybjf.ufs.sh/f/fFLpkrwbNMGHm9hIMcbB9OrJ3DTta2eAdzCqmc6XRSEnNbFx)`,
       }}
     >
       <div className="grid h-full w-full items-start justify-center pt-24">

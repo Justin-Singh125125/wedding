@@ -1,13 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import InvitationImage from "../assets/invitation.png";
 
 export const InvitationSection = () => {
   return (
     <section id="invitation">
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:gap-20">
         <img
-          src={InvitationImage.src}
+          src="https://cq8vqhybjf.ufs.sh/f/fFLpkrwbNMGH4Y8rByPNG9eM1ZJHsV6B2dugvqDpUAmTnPQi"
           alt="Wedding Invitation"
           className="w-full object-cover"
         />
