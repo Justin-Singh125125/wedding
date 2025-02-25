@@ -29,13 +29,13 @@ const RegistryItem = ({ label, url }: RegistryItemProps) => {
 
 export function RegistrySection() {
   return (
-    <div className="space-y-10">
+    <section id="registry" className="space-y-10">
       <h2 className="text-center text-3xl">Registry</h2>
       <div className="grid w-full grid-cols-4 gap-4">
         {registryItems.map((item) => (
           <RegistryItem key={item.id} label={item.label} url={item.url} />
         ))}
       </div>
-    </div>
+    </section>
   );
 }

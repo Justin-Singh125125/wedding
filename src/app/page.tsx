@@ -4,6 +4,7 @@ import { Hero } from "~/components/hero";
 import { RSVPSection } from "~/components/rsvp-section";
 import { InvitationSection } from "~/components/invitation-section";
 import { RegistrySection } from "~/components/registry-section";
+import { FAQSection } from "~/components/faq-section";
 
 export default async function Home() {
   return (
@@ -17,6 +18,7 @@ export default async function Home() {
           <InvitationSection />
           <RSVPSection />
           <RegistrySection />
+          <FAQSection />
         </div>
       </main>
     </HydrateClient>
