@@ -29,11 +29,6 @@ export const RSVPSection = () => {
         className="h-[50rem] w-full"
         alt="RSVP Image"
       />
-      {/* <img
-        src={RSVPImage.src}
-        alt="RSVP Image"
-        className="h-[50rem] w-full object-cover"
-      /> */}
     </section>
   );
 };
