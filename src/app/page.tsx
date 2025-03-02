@@ -5,6 +5,7 @@ import { RSVPSection } from "~/components/rsvp-section";
 import { InvitationSection } from "~/components/invitation-section";
 import { RegistrySection } from "~/components/registry-section";
 import { FAQSection } from "~/components/faq-section";
+import { TimelineSection } from "~/components/timeline-section";
 
 export default async function Home() {
   return (
@@ -15,6 +16,7 @@ export default async function Home() {
         <Hero />
 
         <div className="space-y-10 bg-secondary-400 p-10 sm:p-20 md:space-y-20">
+          <TimelineSection />
           <InvitationSection />
           <RSVPSection />
           <RegistrySection />

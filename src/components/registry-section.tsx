@@ -1,5 +1,6 @@
 import React from "react";
 import { ExternalLink } from "lucide-react";
+import { SectionHeader } from "./ui/section-header";
 
 type RegistryItem = { id: number; label: string; url: string };
 
@@ -36,7 +37,7 @@ const RegistryItem = ({ label, url }: RegistryItemProps) => {
 export function RegistrySection() {
   return (
     <section id="registry" className="space-y-10">
-      <h2 className="text-center text-3xl">Registry</h2>
+      <SectionHeader>Registry</SectionHeader>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
         {registryItems.map((item) => (
           <RegistryItem key={item.id} label={item.label} url={item.url} />
