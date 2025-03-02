@@ -20,13 +20,14 @@ export const RSVPSection = () => {
   return (
     <section
       id="rsvp"
-      className="grid grid-cols-1 items-start gap-10 sm:grid-cols-2 md:gap-20"
+      className="grid grid-cols-1 items-start gap-10 md:gap-20 lg:grid-cols-2"
     >
       <RSVPForm />
+
       <ImageCarousel
         images={IMAGES}
         interval={5000}
-        className="h-[50rem] w-full"
+        className="h-[20rem] w-full sm:h-[30rem] md:h-[40rem] lg:h-[50rem]"
         alt="RSVP Image"
       />
     </section>
