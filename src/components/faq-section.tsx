@@ -1,10 +1,11 @@
 import React from "react";
 import { FAQ } from "./ui/faq";
+import { SectionHeader } from "./ui/section-header";
 
 export const FAQSection = () => {
   return (
-    <section id="faq" className="mx-auto max-w-2xl p-4">
-      <h2 className="mb-6 text-2xl font-bold">Frequently Asked Questions</h2>
+    <section id="faq" className="mx-auto max-w-2xl space-y-10 p-4">
+      <SectionHeader>Frequently Asked Questions</SectionHeader>
       <FAQ />
     </section>
   );

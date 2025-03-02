@@ -15,7 +15,6 @@ import {
   LogOut,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { SectionHeader } from "./section-header";
 
 // Define the timeline item type with an icon as a React node.
 type TimelineItemType = {
