@@ -21,17 +21,15 @@ type RegistryItemProps = Pick<RegistryItem, "label" | "url">;
 
 const RegistryItem = ({ label, url }: RegistryItemProps) => {
   return (
-    <div className="flex justify-center rounded-md bg-white p-4 shadow-md">
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex w-full flex-1 justify-between hover:fill-orange-400 hover:text-primary-400"
-      >
-        <span className="text-xl">{label}</span>
-        <ExternalLink size={28} />
-      </a>
-    </div>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex w-full flex-1 justify-between rounded-md bg-white p-4 shadow-md hover:fill-orange-400 hover:text-primary-400"
+    >
+      <span className="text-xl">{label}</span>
+      <ExternalLink size={28} />
+    </a>
   );
 };
 
