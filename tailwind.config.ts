@@ -18,7 +18,7 @@ const config = {
         },
         secondary: { 400: "#c1d7ff" },
         tertiary: { 400: "#fff" },
-        quatinary: { 400: "#eec64f" },
+        quatinary: { 400: "#F7DBE6" },
       },
       fontFamily: {
         arial: ["Arial", "Helvetica", "sans-serif"],

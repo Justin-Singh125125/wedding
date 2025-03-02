@@ -23,7 +23,7 @@ const faqs: FAQItem[] = [
   {
     id: 4,
     question: "Will there be gifts for guests?",
-    answer: "",
+    answer: "Yes.",
   },
   {
     id: 5,
@@ -55,14 +55,16 @@ const FAQItem = ({ question, answer }: FAQItemProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-gray-200 py-4">
+    <div className="rounded-md border-b border-gray-200 bg-white p-4 py-4">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between text-left focus:outline-none"
+        className="flex w-full items-center justify-between gap-4 text-left focus:outline-none"
       >
-        <span className="text-lg font-medium text-gray-800">{question}</span>
+        <span className="flex-1 rounded-md bg-quatinary-400 p-2 text-lg font-medium text-gray-800 shadow-lg">
+          {question}
+        </span>
         <svg
-          className={`h-6 w-6 transform transition-transform duration-200 ${
+          className={`h-8 w-8 transform rounded-md bg-primary-400 stroke-white shadow-md transition-transform duration-200 ${
             isOpen ? "rotate-180" : "rotate-0"
           }`}
           fill="none"
@@ -84,7 +86,7 @@ const FAQItem = ({ question, answer }: FAQItemProps) => {
 
 export const FAQ = () => {
   return (
-    <div>
+    <div className="space-y-4">
       {faqs.map((faq) => (
         <FAQItem key={faq.id} question={faq.question} answer={faq.answer} />
       ))}
