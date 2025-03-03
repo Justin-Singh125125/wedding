@@ -1,6 +1,5 @@
 import "~/styles/globals.css";
 
-import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
 
 import { TRPCReactProvider } from "~/trpc/react";
@@ -16,7 +15,13 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable} scroll-smooth`}>
+    <html
+      lang="en"
+      className={`scroll-smooth`}
+      style={{
+        fontFamily: '"Playfair Display", serif',
+      }}
+    >
       <body>
         <TRPCReactProvider>{children}</TRPCReactProvider>
         <Toaster />
