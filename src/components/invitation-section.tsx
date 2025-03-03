@@ -1,11 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { SectionHeader } from "./ui/section-header";
 
 export const InvitationSection = () => {
   return (
     <section id="invitation" className="space-y-10">
-      <SectionHeader>Invitation</SectionHeader>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:gap-20">
         <img
           src="https://cq8vqhybjf.ufs.sh/f/fFLpkrwbNMGH4Y8rByPNG9eM1ZJHsV6B2dugvqDpUAmTnPQi"

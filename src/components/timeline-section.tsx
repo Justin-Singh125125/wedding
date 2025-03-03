@@ -4,7 +4,7 @@ import { WeddingTimeline } from "./ui/timeline";
 export const TimelineSection = () => {
   return (
     <section id="timeline" className="space-y-10">
-      <SectionHeader>Wedding Day Timeline</SectionHeader>
+      <SectionHeader>Timeline</SectionHeader>
       <WeddingTimeline />
     </section>
   );
