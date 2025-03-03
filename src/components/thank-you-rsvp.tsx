@@ -7,7 +7,7 @@ export const ThankYouRSVP = () => {
       <h2 className="mb-4 text-2xl font-bold text-primary-400">
         Thank You for Your RSVP!
       </h2>
-      <p className="mb-6 text-secondary-400">
+      <p className="mb-6 font-bold text-primary-400">
         We&apos;re thrilled that you&apos;ll be joining us on our special day.
         Your presence will make our celebration even more memorable.
       </p>

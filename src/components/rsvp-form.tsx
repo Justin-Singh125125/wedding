@@ -194,7 +194,9 @@ export const RSVPForm = () => {
         />
 
         <div className="col-span-full">
-          <Label className="mb-2 block text-secondary-400">Guest Type</Label>
+          <Label className="mb-2 block font-bold text-primary-400">
+            Guest Type
+          </Label>
           <Controller
             name="guestType"
             control={control}
@@ -261,7 +263,7 @@ export const RSVPForm = () => {
             <div className="col-span-full space-y-4">
               {fields.map((field, index) => (
                 <div key={field.id} className="space-y-4">
-                  <Label className="block text-secondary-400">
+                  <Label className="block font-bold text-primary-400">
                     Family Member {index + 1}
                   </Label>
 
