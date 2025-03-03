@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
+import { SectionHeader } from "./ui/section-header";
 
 export const InvitationSection = () => {
   return (
-    <section id="invitation">
+    <section id="invitation" className="space-y-10">
+      <SectionHeader>Invitation</SectionHeader>
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:gap-20">
         <img
           src="https://cq8vqhybjf.ufs.sh/f/fFLpkrwbNMGH4Y8rByPNG9eM1ZJHsV6B2dugvqDpUAmTnPQi"
@@ -17,7 +19,7 @@ export const InvitationSection = () => {
             rel="noopener noreferrer"
             className="hover:text-primary-400 hover:underline"
           >
-            <h2 className="text-md lg:text-2xl">
+            <h2 className="text-md font-bold lg:text-2xl">
               WOLFE HEIGHTS: 9440 Bar Du lane Sacramento, CA 95829
             </h2>
           </a>

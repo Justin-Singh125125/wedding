@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { RSVPForm } from "./rsvp-form";
 import { ImageCarousel } from "./ui/image-carousel";
+import { SectionHeader } from "./ui/section-header";
 
 const IMAGES = [
   "https://cq8vqhybjf.ufs.sh/f/fFLpkrwbNMGHTPBu79zSdJc9aLA3yzgrZ8o1CEtMeOj7puQ5",

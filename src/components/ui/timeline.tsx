@@ -32,77 +32,77 @@ const weddingTimeline: TimelineItemType[] = [
     date: "4:00PM",
     title: "Guests Arrive",
     description: "Guests begin arriving and taking their seats.",
-    icon: <Users className="stroke-primary-400" />,
+    icon: <Users className="stroke-black" />,
   },
   {
     id: 2,
     date: "4:00PM",
     title: "Ceremony",
     description: "The wedding ceremony commences with heartfelt vows.",
-    icon: <Heart className="stroke-primary-400" />,
+    icon: <Heart className="stroke-black" />,
   },
   {
     id: 3,
     date: "4:00PM",
     title: "Photos",
     description: "Capture precious moments with a professional photo session.",
-    icon: <Camera className="stroke-primary-400" />,
+    icon: <Camera className="stroke-black" />,
   },
   {
     id: 4,
     date: "4:00PM",
     title: "Cocktails",
     description: "Enjoy a variety of refreshing cocktails while mingling.",
-    icon: <CupSoda className="stroke-primary-400" />,
+    icon: <CupSoda className="stroke-black" />,
   },
   {
     id: 5,
     date: "4:00PM",
     title: "Dinner",
     description: "A delightful dinner service featuring a gourmet menu.",
-    icon: <Pizza className="stroke-primary-400" />,
+    icon: <Pizza className="stroke-black" />,
   },
   {
     id: 6,
     date: "4:00PM",
     title: "Dessert Announcement - Sip and Floss",
     description: "A fun announcement introducing the dessert course.",
-    icon: <Megaphone className="stroke-primary-400" />,
+    icon: <Megaphone className="stroke-black" />,
   },
   {
     id: 7,
     date: "4:00PM",
     title: "Cake Cutting",
     description: "Cutting of the wedding cake and a sweet celebration.",
-    icon: <Cake className="stroke-primary-400" />,
+    icon: <Cake className="stroke-black" />,
   },
   {
     id: 8,
     date: "4:00PM",
     title: "Games",
     description: "Engage in entertaining games and activities for all ages.",
-    icon: <Gamepad className="stroke-primary-400" />,
+    icon: <Gamepad className="stroke-black" />,
   },
   {
     id: 9,
     date: "4:00PM",
     title: "Dance",
     description: "Open the dance floor and celebrate with music.",
-    icon: <Music className="stroke-primary-400" />,
+    icon: <Music className="stroke-black" />,
   },
   {
     id: 10,
     date: "4:00PM",
     title: "Wrap It Up",
     description: "Closing remarks and thank you's as the event winds down.",
-    icon: <Gift className="stroke-primary-400" />,
+    icon: <Gift className="stroke-black" />,
   },
   {
     id: 11,
     date: "4:00PM",
     title: "Get Out",
     description: "The event concludes and guests begin to depart.",
-    icon: <LogOut className="stroke-primary-400" />,
+    icon: <LogOut className="stroke-black" />,
   },
 ];
 
@@ -122,14 +122,14 @@ const TimelineItem = ({
       transition={{ duration: 0.5, delay: index * 0.2 }}
     >
       {/* Date on the left */}
-      <div className="w-24 pt-1 text-right text-sm font-medium text-gray-600 md:w-32 md:text-base">
+      <div className="pt-1 text-left text-sm font-medium text-gray-600 md:text-base">
         {item.date}
       </div>
 
       {/* Icon in the middle with connector */}
       <div className="flex flex-col items-center">
         <motion.div
-          className="relative z-10 rounded-full border-4 border-tertiary-400 bg-primary-300/20 p-2"
+          className="relative z-10 rounded-full border-4 border-primary-400 bg-primary-300/20 p-2"
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{
@@ -142,7 +142,7 @@ const TimelineItem = ({
         </motion.div>
         {index < weddingTimeline.length - 1 && (
           <motion.div
-            className="mt-2 w-0.5 grow bg-gray-200"
+            className="w-0.5 grow bg-primary-400"
             initial={{ height: 0 }}
             animate={{ height: "100%" }}
             transition={{ duration: 0.5, delay: index * 0.2 + 0.3 }}
@@ -190,7 +190,7 @@ export function WeddingTimeline({
   }, []);
 
   return (
-    <div ref={timelineRef} className="mt-8">
+    <div ref={timelineRef} className="mx-auto grid justify-center">
       {items.map((item, index) => (
         <div key={item.id} className="timeline-item">
           <TimelineItem item={item} index={index} />
