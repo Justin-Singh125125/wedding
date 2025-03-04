@@ -8,7 +8,7 @@ export const Link = ({ children, className, ...props }: LinkProps) => {
   return (
     <BaseLink
       className={cn(
-        "text-[0.8rem] underline-offset-4 hover:underline sm:text-base",
+        "text-[0.8rem] underline-offset-4 hover:underline sm:text-base md:text-lg",
         className,
       )}
       {...props}

@@ -6,7 +6,7 @@ import {
   Heart,
   Camera,
   CupSoda,
-  Pizza,
+  UtensilsCrossed,
   Megaphone,
   Cake,
   Gamepad,
@@ -60,7 +60,7 @@ const weddingTimeline: TimelineItemType[] = [
     date: "4:00PM",
     title: "Dinner",
     description: "A delightful dinner service featuring a gourmet menu.",
-    icon: <Pizza className="stroke-black" />,
+    icon: <UtensilsCrossed className="stroke-black" />,
   },
   {
     id: 6,
@@ -190,9 +190,9 @@ export function WeddingTimeline({
   }, []);
 
   return (
-    <div ref={timelineRef} className="mx-auto grid justify-center">
+    <div ref={timelineRef} className="grid justify-center">
       {items.map((item, index) => (
-        <div key={item.id} className="timeline-item">
+        <div key={item.id} className="timeline-item grid">
           <TimelineItem item={item} index={index} />
         </div>
       ))}

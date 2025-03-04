@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`scroll-smooth`}
+      className={`scroll-p-10 scroll-smooth`}
       style={{
         fontFamily: '"Playfair Display", serif',
       }}

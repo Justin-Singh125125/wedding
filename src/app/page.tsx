@@ -6,6 +6,7 @@ import { InvitationSection } from "~/components/invitation-section";
 import { RegistrySection } from "~/components/registry-section";
 import { FAQSection } from "~/components/faq-section";
 import { TimelineSection } from "~/components/timeline-section";
+import { Footer } from "~/components/ui/footer";
 
 export default async function Home() {
   return (
@@ -22,6 +23,7 @@ export default async function Home() {
           <RegistrySection />
           <FAQSection />
         </div>
+        <Footer />
       </main>
     </HydrateClient>
   );
