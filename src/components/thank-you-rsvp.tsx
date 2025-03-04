@@ -13,7 +13,7 @@ export const ThankYouRSVP = () => {
       </p>
       <div className="text-sm text-gray-500">
         <p>If you need to make any changes to your RSVP,</p>
-        <p>please contact us at justin.singh125125@gmail.com</p>
+        <p>please contact us at jjgetsmarried.2025@gmail.com</p>
       </div>
     </div>
   );
