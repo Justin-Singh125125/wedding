@@ -1,17 +1,18 @@
 "use client";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Heart, XIcon } from "lucide-react";
 import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
-import { ErrorCaption } from "./ui/error-caption";
-import { api } from "../trpc/react";
+import { ErrorCaption } from "../ui/error-caption";
+import { api } from "../../trpc/react";
 import { useToast } from "~/hooks/use-toast";
-import { ThankYouRSVP } from "./thank-you-rsvp";
+import { ThankYouRSVP } from "../thank-you-rsvp";
+import { useGuestPermissions } from "./hooks/use-guest-permissions";
 
 type FormValues = {
   firstName: string;
@@ -89,6 +90,8 @@ const defaultValues: FormValues = {
 export const RSVPForm = () => {
   const { toast } = useToast();
 
+  const guestPermission = useGuestPermissions();
+
   const {
     register,
     control,
@@ -151,48 +154,11 @@ export const RSVPForm = () => {
     return <ThankYouRSVP />;
   }
 
-  return (
-    <div className="w-full rounded-lg bg-white p-6 shadow-2xl">
-      <h2 className="mb-6 text-center text-2xl font-bold text-primary-400">
-        RSVP
-      </h2>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2"
-        noValidate
-      >
-        <Input
-          id="firstName"
-          label="First Name"
-          placeholder="Justin"
-          error={errors.firstName?.message}
-          {...register("firstName")}
-        />
+  const GuestSection = () => {
+    if (guestPermission === "none") return <></>;
 
-        <Input
-          id="lastName"
-          label="Last Name"
-          placeholder="Singh"
-          error={errors.lastName?.message}
-          {...register("lastName")}
-        />
-
-        <Input
-          id="phone"
-          label="Phone Number"
-          placeholder="(916) 955-8073"
-          error={errors.phone?.message}
-          {...register("phone")}
-        />
-
-        <Input
-          id="email"
-          label="Email"
-          placeholder="justin.singh125125@gmail.com"
-          error={errors.email?.message}
-          {...register("email")}
-        />
-
+    return (
+      <>
         <div className="col-span-full">
           <Label className="mb-2 block font-bold text-primary-400">
             Guest Type
@@ -215,6 +181,7 @@ export const RSVPForm = () => {
                   />
                   <Label htmlFor="none">None</Label>
                 </div>
+
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem
                     value="plus1"
@@ -224,14 +191,16 @@ export const RSVPForm = () => {
                   <Label htmlFor="plus1">Plus One</Label>
                 </div>
 
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem
-                    value="family"
-                    id="family"
-                    className="text-primary-400"
-                  />
-                  <Label htmlFor="family">Family</Label>
-                </div>
+                {guestPermission === "guest+family" && (
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem
+                      value="family"
+                      id="family"
+                      className="text-primary-400"
+                    />
+                    <Label htmlFor="family">Family</Label>
+                  </div>
+                )}
               </RadioGroup>
             )}
           />
@@ -257,7 +226,7 @@ export const RSVPForm = () => {
             />
           </div>
         )}
-        {watchGuestType === "family" && (
+        {guestPermission === "guest+family" && watchGuestType === "family" && (
           <>
             <ErrorCaption error={errors.familyMembers?.message} />
             <div className="col-span-full space-y-4">
@@ -305,6 +274,53 @@ export const RSVPForm = () => {
             </Button>
           </>
         )}
+      </>
+    );
+  };
+
+  return (
+    <div className="w-full rounded-lg bg-white p-6 shadow-2xl">
+      <h2 className="mb-6 text-center text-2xl font-bold text-primary-400">
+        RSVP
+      </h2>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid grid-cols-1 gap-4 sm:grid-cols-2"
+        noValidate
+      >
+        <Input
+          id="firstName"
+          label="First Name"
+          placeholder="Justin"
+          error={errors.firstName?.message}
+          {...register("firstName")}
+        />
+
+        <Input
+          id="lastName"
+          label="Last Name"
+          placeholder="Singh"
+          error={errors.lastName?.message}
+          {...register("lastName")}
+        />
+
+        <Input
+          id="phone"
+          label="Phone Number"
+          placeholder="(555) 555-5555"
+          error={errors.phone?.message}
+          {...register("phone")}
+        />
+
+        <Input
+          id="email"
+          label="Email"
+          placeholder="jjgetsmarried.2025@gmail.com"
+          error={errors.email?.message}
+          {...register("email")}
+        />
+
+        <GuestSection />
 
         <Button
           isLoading={mutation.isPending}

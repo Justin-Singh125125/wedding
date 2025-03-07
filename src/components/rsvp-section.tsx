@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { RSVPForm } from "./rsvp-form";
+import { RSVPForm } from "./rsvp-form/rsvp-form";
 import { ImageCarousel } from "./ui/image-carousel";
 import { SectionHeader } from "./ui/section-header";
 
