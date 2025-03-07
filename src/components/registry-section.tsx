@@ -26,7 +26,7 @@ const RegistryItem = ({ label, url }: RegistryItemProps) => {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex w-full flex-1 justify-between rounded-md bg-white p-4 shadow-md hover:fill-orange-400 hover:text-primary-400"
+      className="flex w-full flex-1 items-center justify-between rounded-md bg-white p-4 shadow-md hover:fill-orange-400 hover:text-primary-400"
     >
       <span>{label}</span>
       <ExternalLink size={28} />
