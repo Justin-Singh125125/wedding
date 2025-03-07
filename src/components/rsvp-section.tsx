@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { Suspense } from "react";
 import { RSVPForm } from "./rsvp-form/rsvp-form";
 import { ImageCarousel } from "./ui/image-carousel";
 import { SectionHeader } from "./ui/section-header";
@@ -23,7 +24,9 @@ export const RSVPSection = () => {
       id="rsvp"
       className="grid grid-cols-1 items-start gap-10 md:gap-20 lg:grid-cols-2"
     >
-      <RSVPForm />
+      <Suspense fallback={<p>loading...</p>}>
+        <RSVPForm />
+      </Suspense>
 
       <ImageCarousel
         images={IMAGES}
