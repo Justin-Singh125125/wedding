@@ -280,9 +280,7 @@ export const RSVPForm = () => {
 
   return (
     <div className="w-full rounded-lg bg-white p-6 shadow-2xl">
-      <h2 className="mb-6 text-center text-2xl font-bold text-primary-400">
-        RSVP
-      </h2>
+      <h3 className="mb-6 text-center font-bold text-primary-400">RSVP</h3>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 gap-4 sm:grid-cols-2"

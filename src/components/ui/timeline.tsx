@@ -122,9 +122,7 @@ const TimelineItem = ({
       transition={{ duration: 0.5, delay: index * 0.2 }}
     >
       {/* Date on the left */}
-      <div className="pt-1 text-left text-sm font-medium text-gray-600 md:text-base">
-        {item.date}
-      </div>
+      <span className="pt-1 text-left text-gray-600">{item.date}</span>
 
       {/* Icon in the middle with connector */}
       <div className="flex flex-col items-center">
@@ -152,9 +150,7 @@ const TimelineItem = ({
 
       {/* Content on the right */}
       <div className="grow pb-10">
-        <h3 className="text-lg font-semibold text-gray-900 md:text-xl">
-          {item.title}
-        </h3>
+        <h5 className="font-semibold text-gray-900">{item.title}</h5>
         <p className="mt-1 text-gray-600">{item.description}</p>
       </div>
     </motion.div>

@@ -60,7 +60,7 @@ const FAQItem = ({ question, answer }: FAQItemProps) => {
         onClick={() => setIsOpen(!isOpen)}
         className="flex w-full items-center justify-between gap-4 text-left focus:outline-none"
       >
-        <span className="flex-1 rounded-md bg-quatinary-400 p-2 text-lg font-medium text-gray-800 shadow-lg">
+        <span className="flex-1 rounded-md bg-quatinary-400 p-2 font-medium text-gray-800 shadow-lg">
           {question}
         </span>
         <svg

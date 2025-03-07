@@ -5,9 +5,5 @@ type SectionHeaderProps = {
 };
 
 export const SectionHeader = ({ children }: SectionHeaderProps) => {
-  return (
-    <h2 className="text-center text-2xl font-bold text-gray-900 md:text-4xl">
-      {children}
-    </h2>
-  );
+  return <h2 className="text-center font-bold text-gray-900">{children}</h2>;
 };

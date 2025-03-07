@@ -17,10 +17,10 @@ export const InvitationSection = () => {
             rel="noopener noreferrer"
             className="hover:text-primary-400 hover:underline"
           >
-            <h2 className="text-md font-bold lg:text-2xl">
+            <h4>
               WOLFE HEIGHTS ESTATES WINERY: <br />
               9440 Bar Du lane Sacramento, CA 95829
-            </h2>
+            </h4>
           </a>
           <iframe
             className="w-full flex-1"

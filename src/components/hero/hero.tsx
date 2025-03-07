@@ -22,10 +22,10 @@ export const Hero = () => {
       }}
     >
       <div className="grid h-full w-full items-start justify-center pt-24">
-        <div className="flex flex-col gap-4 text-center">
+        <div className="flex flex-col gap-4 text-center lg:gap-10">
           <Countdown />
 
-          <h2 className="sm:text-3xl">{formattedDate} | Wolfe Heights</h2>
+          <h2>{formattedDate} | Wolfe Heights</h2>
 
           <Link href="#rsvp">
             <Button>RSVP</Button>
