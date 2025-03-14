@@ -4,15 +4,14 @@ import { useEffect, useRef } from "react";
 import {
   Users,
   Heart,
-  Camera,
-  CupSoda,
+  Trophy,
   UtensilsCrossed,
-  Megaphone,
   Cake,
-  Gamepad,
-  Music,
   Gift,
-  LogOut,
+  Music,
+  PartyPopper,
+  ThumbsUp,
+  Wine,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -26,6 +25,7 @@ type TimelineItemType = {
 };
 
 // Your original timeline data list with 11 items.
+
 const weddingTimeline: TimelineItemType[] = [
   {
     id: 1,
@@ -36,73 +36,65 @@ const weddingTimeline: TimelineItemType[] = [
   },
   {
     id: 2,
-    date: "4:00PM",
+    date: "4:30PM",
     title: "Ceremony",
-    description: "The wedding ceremony commences with heartfelt vows.",
+    description:
+      "The wedding ceremony begins with heartfelt vows and a beautiful exchange of rings.",
     icon: <Heart className="stroke-black" />,
   },
   {
     id: 3,
-    date: "4:00PM",
-    title: "Photos",
-    description: "Capture precious moments with a professional photo session.",
-    icon: <Camera className="stroke-black" />,
+    date: "5:00PM",
+    title: "Cocktail Hour",
+    description:
+      "Enjoy a selection of refreshing cocktails and appetizers as guests mingle.",
+    icon: <Wine className="stroke-black" />,
   },
   {
     id: 4,
-    date: "4:00PM",
-    title: "Cocktails",
-    description: "Enjoy a variety of refreshing cocktails while mingling.",
-    icon: <CupSoda className="stroke-black" />,
-  },
-  {
-    id: 5,
-    date: "4:00PM",
+    date: "6:00PM",
     title: "Dinner",
-    description: "A delightful dinner service featuring a gourmet menu.",
+    description:
+      "Enjoy a Filipino buffet, don't forget to take photos with us before you grab your plate.",
     icon: <UtensilsCrossed className="stroke-black" />,
   },
   {
-    id: 6,
-    date: "4:00PM",
-    title: "Dessert Announcement - Sip and Floss",
-    description: "A fun announcement introducing the dessert course.",
-    icon: <Megaphone className="stroke-black" />,
-  },
-  {
-    id: 7,
-    date: "4:00PM",
-    title: "Cake Cutting",
-    description: "Cutting of the wedding cake and a sweet celebration.",
+    id: 5,
+    date: "7:30PM",
+    title: "Dessert",
+    description: "Indulge in a delectable dessert to sweeten the celebration.",
     icon: <Cake className="stroke-black" />,
   },
   {
-    id: 8,
-    date: "4:00PM",
+    id: 6,
+    date: "7:45PM",
     title: "Games",
-    description: "Engage in entertaining games and activities for all ages.",
-    icon: <Gamepad className="stroke-black" />,
+    description:
+      "Enjoy watching us participate in fun wedding games and activities.",
+    icon: <Trophy className="stroke-black" />,
   },
   {
-    id: 9,
-    date: "4:00PM",
-    title: "Dance",
-    description: "Open the dance floor and celebrate with music.",
+    id: 7,
+    date: "7:50PM",
+    title: "Dancing",
+    description: "Dance the night away to lively music and celebrate in style.",
     icon: <Music className="stroke-black" />,
   },
   {
-    id: 10,
-    date: "4:00PM",
-    title: "Wrap It Up",
-    description: "Closing remarks and thank you's as the event winds down.",
+    id: 8,
+    date: "9:30PM",
+    title: "Guests Begin to Leave",
+    description:
+      "Guests start departing, cherishing the wonderful memories of the evening.",
     icon: <Gift className="stroke-black" />,
   },
   {
-    id: 11,
-    date: "4:00PM",
-    title: "Get Out",
-    description: "The event concludes and guests begin to depart.",
-    icon: <LogOut className="stroke-black" />,
+    id: 9,
+    date: "10:00PM",
+    title: "Thanks for Coming",
+    description:
+      "A heartfelt thank you to everyone for celebrating our special day.",
+    icon: <PartyPopper className="stroke-black" />,
   },
 ];
 
