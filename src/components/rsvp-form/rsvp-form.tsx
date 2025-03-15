@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Heart, XIcon, Info } from "lucide-react";
+import { Heart, XIcon } from "lucide-react";
 import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -14,6 +14,9 @@ import { useToast } from "~/hooks/use-toast";
 import { ThankYouRSVP } from "../thank-you-rsvp";
 import { useGuestPermissions } from "./hooks/use-guest-permissions";
 import { InfoBanner } from "../ui/info-banner";
+import { RSVPCountdown } from "./rsvp-countdown";
+
+import { RSVP_TARGET_DATE } from "~/constants";
 
 type FormValues = {
   firstName: string;
@@ -89,6 +92,11 @@ const defaultValues: FormValues = {
 };
 
 export const RSVPForm = () => {
+  // Check if current date is past the RSVP deadline
+  const currentDate = new Date();
+  const rsvpTargetDate = new Date(RSVP_TARGET_DATE);
+  const isRsvpClosed = currentDate.getTime() >= rsvpTargetDate.getTime();
+
   const { toast } = useToast();
 
   const guestPermission = useGuestPermissions();
@@ -150,6 +158,28 @@ export const RSVPForm = () => {
   useEffect(() => {
     setValue("phone", formatPhoneNumber(watchPhone));
   }, [setValue, watchPhone]);
+
+  if (isRsvpClosed) {
+    return (
+      <div className="w-full space-y-4 rounded-lg bg-white p-6 text-center shadow-2xl">
+        <h3 className="font-bold text-primary-400">RSVP</h3>
+        <RSVPCountdown />
+        <div>
+          <p className="mb-4 text-lg">The date to RSVP has passed.</p>
+          <p>
+            Please contact us at{" "}
+            <a
+              href="mailto:jjgetsmarried.2025@gmail.com"
+              className="text-primary-400 underline"
+            >
+              jjgetsmarried.2025@gmail.com
+            </a>{" "}
+            for assistance.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   if (mutation.isSuccess) {
     return <ThankYouRSVP />;
@@ -285,14 +315,16 @@ export const RSVPForm = () => {
   return (
     <div className="w-full space-y-4 rounded-lg bg-white p-6 shadow-2xl">
       <h3 className="text-center font-bold text-primary-400">RSVP</h3>
+
+      <RSVPCountdown />
       {guestPermission === "guest" || guestPermission === "guest+family" ? (
         <InfoBanner
-          variant="quatinary"
+          variant="secondary"
           message="Do not share the link to this website and be mindful when adding guests."
         />
       ) : (
         <InfoBanner
-          variant="quatinary"
+          variant="secondary"
           message="Do not share the link to this website."
         />
       )}
