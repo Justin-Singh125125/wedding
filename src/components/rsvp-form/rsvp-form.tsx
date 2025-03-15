@@ -145,6 +145,9 @@ export const RSVPForm = () => {
 
   const watchGuestType = watch("guestType");
   const watchPhone = watch("phone");
+  const watchFamilyMembers = watch("familyMembers");
+
+  console.log(watchFamilyMembers.length);
 
   useEffect(() => {
     setValue("phone", formatPhoneNumber(watchPhone));
@@ -263,15 +266,17 @@ export const RSVPForm = () => {
                 </div>
               ))}
             </div>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => append({ firstName: "", lastName: "" })}
-              className="col-span-full"
-            >
-              <Heart className="mr-2 h-4 w-4" />
-              Add Family Member
-            </Button>
+            {watchFamilyMembers.length < 6 && (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => append({ firstName: "", lastName: "" })}
+                className="col-span-full"
+              >
+                <Heart className="mr-2 h-4 w-4" />
+                Add Family Member
+              </Button>
+            )}
           </>
         )}
       </>
