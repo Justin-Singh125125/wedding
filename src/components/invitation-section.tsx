@@ -6,7 +6,7 @@ export const InvitationSection = () => {
     <section id="invitation" className="space-y-10">
       <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:gap-20">
         <img
-          src="https://cq8vqhybjf.ufs.sh/f/fFLpkrwbNMGH4Y8rByPNG9eM1ZJHsV6B2dugvqDpUAmTnPQi"
+          src="https://cq8vqhybjf.ufs.sh/f/fFLpkrwbNMGH5DE5suRxgNu5fW9QkJmoT3DqjbEln82XFVUZ"
           alt="Wedding Invitation"
           className="w-full object-cover"
         />
