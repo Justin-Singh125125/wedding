@@ -82,7 +82,7 @@ const weddingTimeline: TimelineItemType[] = [
   },
   {
     id: 8,
-    date: "9:30PM",
+    date: "10:00PM",
     title: "Guests Begin to Leave",
     description:
       "Guests start departing, cherishing the wonderful memories of the evening.",
@@ -90,7 +90,7 @@ const weddingTimeline: TimelineItemType[] = [
   },
   {
     id: 9,
-    date: "10:00PM",
+    date: "11:00PM",
     title: "Thanks for Coming",
     description:
       "A heartfelt thank you to everyone for celebrating our special day.",
