@@ -145,9 +145,6 @@ export const RSVPForm = () => {
 
   const watchGuestType = watch("guestType");
   const watchPhone = watch("phone");
-  const watchFamilyMembers = watch("familyMembers");
-
-  console.log(watchFamilyMembers.length);
 
   useEffect(() => {
     setValue("phone", formatPhoneNumber(watchPhone));
@@ -266,7 +263,8 @@ export const RSVPForm = () => {
                 </div>
               ))}
             </div>
-            {watchFamilyMembers.length < 6 && (
+
+            {fields.length < 6 && (
               <Button
                 type="button"
                 variant="outline"
