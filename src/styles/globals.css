@@ -10,7 +10,7 @@
   }
 
   h2 {
-    @apply text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl;
+    @apply text-xl font-bold sm:text-3xl md:text-4xl lg:text-5xl;
   }
 
   h3 {

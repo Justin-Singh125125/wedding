@@ -21,7 +21,7 @@ export const Hero = () => {
         backgroundImage: `url(https://cq8vqhybjf.ufs.sh/f/fFLpkrwbNMGHm9hIMcbB9OrJ3DTta2eAdzCqmc6XRSEnNbFx)`,
       }}
     >
-      <div className="grid h-full w-full items-start justify-center pt-24">
+      <div className="grid h-full w-full items-start justify-center pt-12 sm:pt-16">
         <div className="flex flex-col gap-4 text-center lg:gap-10">
           <Countdown />
 
