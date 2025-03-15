@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Heart, XIcon } from "lucide-react";
+import { Heart, XIcon, Info } from "lucide-react";
 import { useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
@@ -13,6 +13,7 @@ import { api } from "../../trpc/react";
 import { useToast } from "~/hooks/use-toast";
 import { ThankYouRSVP } from "../thank-you-rsvp";
 import { useGuestPermissions } from "./hooks/use-guest-permissions";
+import { InfoBanner } from "../ui/info-banner";
 
 type FormValues = {
   firstName: string;
@@ -282,8 +283,20 @@ export const RSVPForm = () => {
   };
 
   return (
-    <div className="w-full rounded-lg bg-white p-6 shadow-2xl">
-      <h3 className="mb-6 text-center font-bold text-primary-400">RSVP</h3>
+    <div className="w-full space-y-4 rounded-lg bg-white p-6 shadow-2xl">
+      <h3 className="text-center font-bold text-primary-400">RSVP</h3>
+      {guestPermission === "guest" || guestPermission === "guest+family" ? (
+        <InfoBanner
+          variant="quatinary"
+          message="Do not share the link to this website and be mindful when adding guests."
+        />
+      ) : (
+        <InfoBanner
+          variant="quatinary"
+          message="Do not share the link to this website."
+        />
+      )}
+
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 gap-4 sm:grid-cols-2"
