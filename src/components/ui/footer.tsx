@@ -1,5 +1,15 @@
+import { TARGET_DATE } from "~/constants";
 import { Link } from "./link";
 import { Heart, Mail, Calendar } from "lucide-react";
+
+const formattedDate = TARGET_DATE.toLocaleString("en-US", {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+  hour: "numeric",
+  minute: "numeric",
+  hour12: true,
+});
 
 export const Footer = () => {
   return (
@@ -74,7 +84,7 @@ export const Footer = () => {
             <h3 className="mb-2 font-semibold">Our Wedding</h3>
             <div className="flex items-center">
               <Calendar className="mr-2" size={16} />
-              <span>2025</span>
+              <span>{formattedDate}</span>
             </div>
             <p className="text-center italic text-white/90 md:text-right">
               The marriage of Justin and Jenna Singh
