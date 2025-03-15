@@ -22,6 +22,7 @@ export default function RootLayout({
         fontFamily: '"Playfair Display", serif',
       }}
     >
+      <meta name="apple-mobile-web-app-title" content="MyWebSite" />
       <body>
         <TRPCReactProvider>{children}</TRPCReactProvider>
         <Toaster />

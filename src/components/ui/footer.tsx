@@ -29,7 +29,7 @@ export const Footer = () => {
           {/* Navigation column */}
           <div className="flex flex-col items-center space-y-3">
             <h3 className="mb-2 font-semibold">Quick Links</h3>
-            <div className="grid grid-cols-2 gap-x-8 gap-y-2">
+            <div className="grid grid-cols-3 gap-x-8 gap-y-2">
               <Link
                 href="#home"
                 className="transition-colors hover:text-white/80"

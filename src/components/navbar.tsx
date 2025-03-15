@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import { Link } from "./ui/link";
 
 export const Navbar = () => {
   return (
     <div className="relative">
-      <nav className="absolute z-10 flex w-full flex-1 justify-center gap-6 p-4 text-white">
+      <nav className="absolute z-10 flex w-full flex-1 items-center justify-center gap-6 p-4 text-white">
         <Link href="#home">Home</Link>
         <Link href="#timeline">Timeline</Link>
         <Link href="#invitation">Invitation</Link>
