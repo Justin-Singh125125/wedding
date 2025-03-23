@@ -46,7 +46,10 @@ export const guestRouter = createTRPCRouter({
           },
           familyMembers: {
             createMany: {
-              data: input.familyMembers.map((member) => member),
+              data:
+                input.guestType === "family"
+                  ? input.familyMembers.map((member) => member)
+                  : [],
             },
           },
         },
