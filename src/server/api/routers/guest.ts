@@ -48,9 +48,10 @@ export const guestRouter = createTRPCRouter({
           },
           familyMembers: {
             createMany: {
-              data: input.canAttend
-                ? input.familyMembers.map((member) => member)
-                : [],
+              data:
+                input.canAttend && input.guestType === "family"
+                  ? input.familyMembers.map((member) => member)
+                  : [],
             },
           },
         },

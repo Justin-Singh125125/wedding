@@ -1,5 +1,13 @@
 "use client";
-import { useForm, useFieldArray, Controller } from "react-hook-form";
+import {
+  useForm,
+  useFieldArray,
+  Controller,
+  type Control,
+  type FieldErrors,
+  type UseFormRegister,
+  type FieldArrayWithId,
+} from "react-hook-form";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
@@ -15,7 +23,6 @@ import { ThankYouRSVP } from "../thank-you-rsvp";
 import { useGuestPermissions } from "./hooks/use-guest-permissions";
 import { InfoBanner } from "../ui/info-banner";
 import { RSVPCountdown } from "./rsvp-countdown";
-
 import { RSVP_TARGET_DATE } from "~/constants";
 
 type FormValues = {
@@ -99,6 +106,145 @@ const defaultValues: FormValues = {
   familyMembers: [],
 };
 
+interface GuestSectionProps {
+  guestPermission: "none" | "guest" | "guest+family";
+  control: Control<FormValues>;
+  errors: FieldErrors<FormValues>;
+  watchGuestType: FormValues["guestType"];
+  register: UseFormRegister<FormValues>;
+  fields: FieldArrayWithId<FormValues, "familyMembers", "id">[];
+  remove: (index: number) => void;
+  append: (value: { firstName: string; lastName: string }) => void;
+}
+
+export const GuestSection: React.FC<GuestSectionProps> = ({
+  guestPermission,
+  control,
+  errors,
+  watchGuestType,
+  register,
+  fields,
+  remove,
+  append,
+}) => {
+  if (guestPermission === "none") return <></>;
+
+  return (
+    <>
+      <div className="col-span-full">
+        <Label className="mb-2 block font-bold text-primary-400">
+          Guest Type
+        </Label>
+        <Controller
+          name="guestType"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <RadioGroup
+              onValueChange={field.onChange}
+              value={field.value}
+              className="flex space-x-4"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem
+                  value="none"
+                  id="none"
+                  className="text-primary-400"
+                />
+                <Label htmlFor="none">None</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem
+                  value="plus1"
+                  id="plus1"
+                  className="text-primary-400"
+                />
+                <Label htmlFor="plus1">Plus One</Label>
+              </div>
+              {guestPermission === "guest+family" && (
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value="family"
+                    id="family"
+                    className="text-primary-400"
+                  />
+                  <Label htmlFor="family">Family</Label>
+                </div>
+              )}
+            </RadioGroup>
+          )}
+        />
+        <ErrorCaption error={errors.guestType?.message} />
+      </div>
+      {watchGuestType === "plus1" && (
+        <div className="col-span-full grid grid-cols-2 gap-4">
+          <Input
+            id="plusOne.firstName"
+            label="First Name"
+            placeholder="Justin"
+            error={errors.plusOne?.firstName?.message}
+            {...register("plusOne.firstName")}
+          />
+          <Input
+            id="plusOne.lastName"
+            label="Last Name"
+            placeholder="Singh"
+            error={errors.plusOne?.lastName?.message}
+            {...register("plusOne.lastName")}
+          />
+        </div>
+      )}
+      {guestPermission === "guest+family" && watchGuestType === "family" && (
+        <>
+          <ErrorCaption error={errors.familyMembers?.message} />
+          <div className="col-span-full space-y-4">
+            {fields.map((field, index) => (
+              <div key={field.id} className="space-y-4">
+                <Label className="block font-bold text-primary-400">
+                  Family Member {index + 1}
+                </Label>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-[1fr_1fr_auto]">
+                  <Input
+                    id={`familyMembers.${index}.firstName`}
+                    placeholder="Justin"
+                    error={errors.familyMembers?.[index]?.firstName?.message}
+                    {...register(`familyMembers.${index}.firstName` as const)}
+                  />
+                  <Input
+                    id={`familyMembers.${index}.lastName`}
+                    placeholder="Singh"
+                    error={errors.familyMembers?.[index]?.lastName?.message}
+                    {...register(`familyMembers.${index}.lastName` as const)}
+                  />
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    onClick={() => remove(index)}
+                    className="px-2"
+                  >
+                    <XIcon className="h-4 w-4" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+          {fields.length < 6 && (
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => append({ firstName: "", lastName: "" })}
+              className="col-span-full"
+            >
+              <Heart className="mr-2 h-4 w-4" />
+              Add Family Member
+            </Button>
+          )}
+        </>
+      )}
+    </>
+  );
+};
+
 export const RSVPForm = () => {
   // Check if current date is past the RSVP deadline
   const currentDate = new Date();
@@ -106,7 +252,6 @@ export const RSVPForm = () => {
   const isRsvpClosed = currentDate.getTime() >= rsvpTargetDate.getTime();
 
   const { toast } = useToast();
-
   const guestPermission = useGuestPermissions();
 
   const {
@@ -151,7 +296,6 @@ export const RSVPForm = () => {
             ? data.familyMembers
             : [],
       },
-
       {
         onError: () => {
           toast({
@@ -198,137 +342,9 @@ export const RSVPForm = () => {
     return <ThankYouRSVP canAttend={mutation.variables.canAttend} />;
   }
 
-  const GuestSection = () => {
-    if (guestPermission === "none" || watch("canAttend") !== true) return <></>;
-
-    return (
-      <>
-        <div className="col-span-full">
-          <Label className="mb-2 block font-bold text-primary-400">
-            Guest Type
-          </Label>
-          <Controller
-            name="guestType"
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <RadioGroup
-                onValueChange={field.onChange}
-                value={field.value}
-                className="flex space-x-4"
-              >
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem
-                    value="none"
-                    id="none"
-                    className="text-primary-400"
-                  />
-                  <Label htmlFor="none">None</Label>
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <RadioGroupItem
-                    value="plus1"
-                    id="plus1"
-                    className="text-primary-400"
-                  />
-                  <Label htmlFor="plus1">Plus One</Label>
-                </div>
-
-                {guestPermission === "guest+family" && (
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem
-                      value="family"
-                      id="family"
-                      className="text-primary-400"
-                    />
-                    <Label htmlFor="family">Family</Label>
-                  </div>
-                )}
-              </RadioGroup>
-            )}
-          />
-
-          <ErrorCaption error={errors.guestType?.message} />
-        </div>
-        {watchGuestType === "plus1" && (
-          <div className="col-span-full grid grid-cols-2 gap-4">
-            <Input
-              id="plusOne.firstName"
-              label="First Name"
-              placeholder="Justin"
-              error={errors.plusOne?.firstName?.message}
-              {...register("plusOne.firstName")}
-            />
-
-            <Input
-              id="plusOne.lastName"
-              label="Last Name"
-              placeholder="Singh"
-              error={errors.plusOne?.lastName?.message}
-              {...register("plusOne.lastName")}
-            />
-          </div>
-        )}
-        {guestPermission === "guest+family" && watchGuestType === "family" && (
-          <>
-            <ErrorCaption error={errors.familyMembers?.message} />
-            <div className="col-span-full space-y-4">
-              {fields.map((field, index) => (
-                <div key={field.id} className="space-y-4">
-                  <Label className="block font-bold text-primary-400">
-                    Family Member {index + 1}
-                  </Label>
-
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-[1fr_1fr_auto]">
-                    <Input
-                      id={`familyMembers.${index}.firstName`}
-                      placeholder="Justin"
-                      error={errors.familyMembers?.[index]?.firstName?.message}
-                      {...register(`familyMembers.${index}.firstName` as const)}
-                    />
-
-                    <Input
-                      id={`familyMembers.${index}.lastName`}
-                      placeholder="Singh"
-                      error={errors.familyMembers?.[index]?.lastName?.message}
-                      {...register(`familyMembers.${index}.lastName` as const)}
-                    />
-
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      onClick={() => remove(index)}
-                      className="px-2"
-                    >
-                      <XIcon className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {fields.length < 6 && (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => append({ firstName: "", lastName: "" })}
-                className="col-span-full"
-              >
-                <Heart className="mr-2 h-4 w-4" />
-                Add Family Member
-              </Button>
-            )}
-          </>
-        )}
-      </>
-    );
-  };
-
   return (
     <div className="w-full space-y-4 rounded-lg bg-white p-6 shadow-2xl">
       <h3 className="text-center font-bold text-primary-400">RSVP</h3>
-
       <RSVPCountdown />
       {guestPermission === "guest" || guestPermission === "guest+family" ? (
         <InfoBanner
@@ -341,7 +357,6 @@ export const RSVPForm = () => {
           message="Do not share the link to this website."
         />
       )}
-
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="grid grid-cols-1 gap-4 sm:grid-cols-2"
@@ -354,7 +369,6 @@ export const RSVPForm = () => {
           error={errors.firstName?.message}
           {...register("firstName")}
         />
-
         <Input
           id="lastName"
           label="Last Name"
@@ -362,7 +376,6 @@ export const RSVPForm = () => {
           error={errors.lastName?.message}
           {...register("lastName")}
         />
-
         <Input
           id="phone"
           label="Phone Number"
@@ -370,7 +383,6 @@ export const RSVPForm = () => {
           error={errors.phone?.message}
           {...register("phone")}
         />
-
         <Input
           id="email"
           label="Email"
@@ -418,7 +430,16 @@ export const RSVPForm = () => {
           <ErrorCaption error={errors.canAttend?.message} />
         </div>
 
-        <GuestSection />
+        <GuestSection
+          guestPermission={guestPermission}
+          control={control}
+          errors={errors}
+          watchGuestType={watchGuestType}
+          register={register}
+          fields={fields}
+          remove={remove}
+          append={append}
+        />
 
         <Button
           isLoading={mutation.isPending}
