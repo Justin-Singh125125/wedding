@@ -45,8 +45,11 @@ const formSchema = Yup.object().shape({
   guestType: Yup.string()
     .oneOf(["none", "plus1", "family"], "Invalid guest type")
     .required("Guest type is required"),
-  plusOne: Yup.object().when("guestType", {
-    is: "plus1",
+  // Only validate plusOne if the user can attend and guestType is "plus1".
+  plusOne: Yup.object().when(["canAttend", "guestType"], {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    is: (canAttend: boolean, guestType: FormValues["guestType"]) =>
+      canAttend && guestType === "plus1",
     then: () =>
       Yup.object({
         firstName: Yup.string().required("First name is required"),
@@ -54,8 +57,10 @@ const formSchema = Yup.object().shape({
       }),
     otherwise: () => Yup.object().notRequired(),
   }),
-  familyMembers: Yup.object().when("guestType", {
-    is: "family",
+  // Only validate familyMembers if the user can attend and guestType is "family".
+  familyMembers: Yup.array().when(["canAttend", "guestType"], {
+    is: (canAttend: boolean, guestType: FormValues["guestType"]) =>
+      canAttend && guestType === "family",
     then: () =>
       Yup.array()
         .of(
@@ -66,7 +71,7 @@ const formSchema = Yup.object().shape({
         )
         .min(
           1,
-          'At least 1 guest is required. Press the "Add Family Member" button. If you do not have any guests select "None" option',
+          'At least 1 guest is required. Press the "Add Family Member" button. If you do not have any guests select the "None" option',
         ),
     otherwise: () => Yup.array().notRequired(),
   }),
@@ -129,18 +134,22 @@ export const RSVPForm = () => {
       {
         firstName: data.firstName,
         lastName: data.lastName,
-        canAttend: data.canAttend,
+        // canAttend will not be null here due to form validation
+        canAttend: data.canAttend!,
         guestType: data.guestType,
         email: data.email,
         phoneNumber: data.phone,
         plusOne:
-          data.guestType === "plus1"
+          data.canAttend && data.guestType === "plus1"
             ? {
                 firstName: data.plusOne.firstName,
                 lastName: data.plusOne.lastName,
               }
             : undefined,
-        familyMembers: data.familyMembers,
+        familyMembers:
+          data.canAttend && data.guestType === "family"
+            ? data.familyMembers
+            : [],
       },
 
       {
@@ -186,7 +195,7 @@ export const RSVPForm = () => {
   }
 
   if (mutation.isSuccess) {
-    return <ThankYouRSVP />;
+    return <ThankYouRSVP canAttend={mutation.variables.canAttend} />;
   }
 
   const GuestSection = () => {
