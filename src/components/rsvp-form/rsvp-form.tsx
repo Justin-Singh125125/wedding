@@ -30,6 +30,7 @@ type FormValues = {
   lastName: string;
   phone: string;
   email: string;
+  canAttend: boolean | null;
   guestType: "none" | "plus1" | "family";
   plusOne: {
     firstName: string;
@@ -47,11 +48,15 @@ const formSchema = Yup.object().shape({
   email: Yup.string()
     .email("Please enter a valid email address")
     .required("Email is required"),
+  canAttend: Yup.boolean().required("Please indicate if you can attend"),
   guestType: Yup.string()
     .oneOf(["none", "plus1", "family"], "Invalid guest type")
     .required("Guest type is required"),
-  plusOne: Yup.object().when("guestType", {
-    is: "plus1",
+  // Only validate plusOne if the user can attend and guestType is "plus1".
+  plusOne: Yup.object().when(["canAttend", "guestType"], {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    is: (canAttend: boolean, guestType: FormValues["guestType"]) =>
+      canAttend && guestType === "plus1",
     then: () =>
       Yup.object({
         firstName: Yup.string().required("First name is required"),
@@ -59,8 +64,10 @@ const formSchema = Yup.object().shape({
       }),
     otherwise: () => Yup.object().notRequired(),
   }),
-  familyMembers: Yup.object().when("guestType", {
-    is: "family",
+  // Only validate familyMembers if the user can attend and guestType is "family".
+  familyMembers: Yup.array().when(["canAttend", "guestType"], {
+    is: (canAttend: boolean, guestType: FormValues["guestType"]) =>
+      canAttend && guestType === "family",
     then: () =>
       Yup.array()
         .of(
@@ -71,7 +78,7 @@ const formSchema = Yup.object().shape({
         )
         .min(
           1,
-          'At least 1 guest is required. Press the "Add Family Member" button. If you do not have any guests select "None" option',
+          'At least 1 guest is required. Press the "Add Family Member" button. If you do not have any guests select the "None" option',
         ),
     otherwise: () => Yup.array().notRequired(),
   }),
@@ -93,12 +100,14 @@ const defaultValues: FormValues = {
   lastName: "",
   phone: "",
   email: "",
+  canAttend: null,
   guestType: "none",
   plusOne: { firstName: "", lastName: "" },
   familyMembers: [],
 };
 
 interface GuestSectionProps {
+  watchCanAttend: boolean | null;
   guestPermission: "none" | "guest" | "guest+family";
   control: Control<FormValues>;
   errors: FieldErrors<FormValues>;
@@ -118,8 +127,9 @@ export const GuestSection: React.FC<GuestSectionProps> = ({
   fields,
   remove,
   append,
+  watchCanAttend,
 }) => {
-  if (guestPermission === "none") return <></>;
+  if (guestPermission === "none" || !watchCanAttend) return <></>;
 
   return (
     <>
@@ -271,17 +281,22 @@ export const RSVPForm = () => {
       {
         firstName: data.firstName,
         lastName: data.lastName,
+        // canAttend will not be null here due to form validation
+        canAttend: data.canAttend!,
         guestType: data.guestType,
         email: data.email,
         phoneNumber: data.phone,
         plusOne:
-          data.guestType === "plus1"
+          data.canAttend && data.guestType === "plus1"
             ? {
                 firstName: data.plusOne.firstName,
                 lastName: data.plusOne.lastName,
               }
             : undefined,
-        familyMembers: data.guestType === "family" ? data.familyMembers : [],
+        familyMembers:
+          data.canAttend && data.guestType === "family"
+            ? data.familyMembers
+            : [],
       },
       {
         onError: () => {
@@ -298,6 +313,7 @@ export const RSVPForm = () => {
 
   const watchGuestType = watch("guestType");
   const watchPhone = watch("phone");
+  const watchCanAttend = watch("canAttend");
 
   useEffect(() => {
     setValue("phone", formatPhoneNumber(watchPhone));
@@ -326,7 +342,7 @@ export const RSVPForm = () => {
   }
 
   if (mutation.isSuccess) {
-    return <ThankYouRSVP />;
+    return <ThankYouRSVP canAttend={mutation.variables.canAttend} />;
   }
 
   return (
@@ -378,7 +394,47 @@ export const RSVPForm = () => {
           {...register("email")}
         />
 
+        <div className="col-span-full">
+          <Label className="mb-2 block font-bold text-primary-400">
+            Will you be able to attend?
+          </Label>
+          <Controller
+            name="canAttend"
+            control={control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <RadioGroup
+                onValueChange={(value) => field.onChange(value === "true")}
+                value={
+                  field.value === null ? "" : field.value ? "true" : "false"
+                }
+                className="flex space-x-4"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value="true"
+                    id="attend-yes"
+                    className="text-primary-400"
+                  />
+                  <Label htmlFor="attend-yes">Yes, I will attend</Label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value="false"
+                    id="attend-no"
+                    className="text-primary-400"
+                  />
+                  <Label htmlFor="attend-no">No, I cannot attend</Label>
+                </div>
+              </RadioGroup>
+            )}
+          />
+          <ErrorCaption error={errors.canAttend?.message} />
+        </div>
+
         <GuestSection
+          watchCanAttend={watchCanAttend}
           guestPermission={guestPermission}
           control={control}
           errors={errors}

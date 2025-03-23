@@ -16,6 +16,7 @@ model Guest {
     lastName      String
     phoneNumber   String
     email         String
+    canAttend     Boolean        @default(true)
     createdAt     DateTime       @default(now())
     updatedAt     DateTime       @updatedAt
     plusOne       PlusOne?
