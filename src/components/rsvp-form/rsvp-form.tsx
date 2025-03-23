@@ -23,6 +23,7 @@ type FormValues = {
   lastName: string;
   phone: string;
   email: string;
+  canAttend: boolean | null;
   guestType: "none" | "plus1" | "family";
   plusOne: {
     firstName: string;
@@ -40,6 +41,7 @@ const formSchema = Yup.object().shape({
   email: Yup.string()
     .email("Please enter a valid email address")
     .required("Email is required"),
+  canAttend: Yup.boolean().required("Please indicate if you can attend"),
   guestType: Yup.string()
     .oneOf(["none", "plus1", "family"], "Invalid guest type")
     .required("Guest type is required"),
@@ -86,6 +88,7 @@ const defaultValues: FormValues = {
   lastName: "",
   phone: "",
   email: "",
+  canAttend: null,
   guestType: "none",
   plusOne: { firstName: "", lastName: "" },
   familyMembers: [],
@@ -126,6 +129,7 @@ export const RSVPForm = () => {
       {
         firstName: data.firstName,
         lastName: data.lastName,
+        canAttend: data.canAttend,
         guestType: data.guestType,
         email: data.email,
         phoneNumber: data.phone,
@@ -186,7 +190,7 @@ export const RSVPForm = () => {
   }
 
   const GuestSection = () => {
-    if (guestPermission === "none") return <></>;
+    if (guestPermission === "none" || watch("canAttend") !== true) return <></>;
 
     return (
       <>
@@ -365,6 +369,45 @@ export const RSVPForm = () => {
           error={errors.email?.message}
           {...register("email")}
         />
+
+        <div className="col-span-full">
+          <Label className="mb-2 block font-bold text-primary-400">
+            Will you be able to attend?
+          </Label>
+          <Controller
+            name="canAttend"
+            control={control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <RadioGroup
+                onValueChange={(value) => field.onChange(value === "true")}
+                value={
+                  field.value === null ? "" : field.value ? "true" : "false"
+                }
+                className="flex space-x-4"
+              >
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value="true"
+                    id="attend-yes"
+                    className="text-primary-400"
+                  />
+                  <Label htmlFor="attend-yes">Yes, I will attend</Label>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem
+                    value="false"
+                    id="attend-no"
+                    className="text-primary-400"
+                  />
+                  <Label htmlFor="attend-no">No, I cannot attend</Label>
+                </div>
+              </RadioGroup>
+            )}
+          />
+          <ErrorCaption error={errors.canAttend?.message} />
+        </div>
 
         <GuestSection />
 
