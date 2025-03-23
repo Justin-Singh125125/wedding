@@ -107,6 +107,7 @@ const defaultValues: FormValues = {
 };
 
 interface GuestSectionProps {
+  watchCanAttend: boolean | null;
   guestPermission: "none" | "guest" | "guest+family";
   control: Control<FormValues>;
   errors: FieldErrors<FormValues>;
@@ -126,8 +127,9 @@ export const GuestSection: React.FC<GuestSectionProps> = ({
   fields,
   remove,
   append,
+  watchCanAttend,
 }) => {
-  if (guestPermission === "none") return <></>;
+  if (guestPermission === "none" || !watchCanAttend) return <></>;
 
   return (
     <>
@@ -311,6 +313,7 @@ export const RSVPForm = () => {
 
   const watchGuestType = watch("guestType");
   const watchPhone = watch("phone");
+  const watchCanAttend = watch("canAttend");
 
   useEffect(() => {
     setValue("phone", formatPhoneNumber(watchPhone));
@@ -431,6 +434,7 @@ export const RSVPForm = () => {
         </div>
 
         <GuestSection
+          watchCanAttend={watchCanAttend}
           guestPermission={guestPermission}
           control={control}
           errors={errors}
