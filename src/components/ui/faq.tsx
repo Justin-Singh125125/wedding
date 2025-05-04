@@ -51,7 +51,7 @@ const faqs: FAQItem[] = [
     id: 6,
     question: "Can I take photos?",
     answer:
-      "Our ceremony will be an unplugged ceremony, but after please take as many photos as you'd like. We will also have a QR code for you to share your photos with us.",
+      "Our ceremony will be an unplugged (no electronics allowed) ceremony, as we want to keep everything personal and intimate. After the ceremony, please take as many photos as you would like. We will also have a QR code for you to share your photos with us.",
   },
   {
     id: 7,
