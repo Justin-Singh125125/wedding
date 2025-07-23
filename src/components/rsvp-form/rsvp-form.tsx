@@ -251,7 +251,7 @@ export const RSVPForm = () => {
   // Check if current date is past the RSVP deadline
   const currentDate = new Date();
   const rsvpTargetDate = new Date(RSVP_TARGET_DATE);
-  const isRsvpClosed = currentDate.getTime() >= rsvpTargetDate.getTime();
+  // const isRsvpClosed = currentDate.getTime() >= rsvpTargetDate.getTime();
 
   const { toast } = useToast();
   const guestPermission = useGuestPermissions();
@@ -319,27 +319,27 @@ export const RSVPForm = () => {
     setValue("phone", formatPhoneNumber(watchPhone));
   }, [setValue, watchPhone]);
 
-  if (isRsvpClosed) {
-    return (
-      <div className="w-full space-y-4 rounded-lg bg-white p-6 text-center shadow-2xl">
-        <h3 className="font-bold text-primary-400">RSVP</h3>
-        <RSVPCountdown />
-        <div>
-          <p className="mb-4 text-lg">The date to RSVP has passed.</p>
-          <p>
-            Please contact us at{" "}
-            <a
-              href="mailto:jjgetsmarried.2025@gmail.com"
-              className="text-primary-400 underline"
-            >
-              jjgetsmarried.2025@gmail.com
-            </a>{" "}
-            for assistance.
-          </p>
-        </div>
-      </div>
-    );
-  }
+  // if (isRsvpClosed) {
+  //   return (
+  //     <div className="w-full space-y-4 rounded-lg bg-white p-6 text-center shadow-2xl">
+  //       <h3 className="font-bold text-primary-400">RSVP</h3>
+  //       <RSVPCountdown />
+  //       <div>
+  //         <p className="mb-4 text-lg">The date to RSVP has passed.</p>
+  //         <p>
+  //           Please contact us at{" "}
+  //           <a
+  //             href="mailto:jjgetsmarried.2025@gmail.com"
+  //             className="text-primary-400 underline"
+  //           >
+  //             jjgetsmarried.2025@gmail.com
+  //           </a>{" "}
+  //           for assistance.
+  //         </p>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   if (mutation.isSuccess) {
     return <ThankYouRSVP canAttend={mutation.variables.canAttend} />;
@@ -349,6 +349,9 @@ export const RSVPForm = () => {
     <div className="w-full space-y-4 rounded-lg bg-white p-6 shadow-2xl">
       <h3 className="text-center font-bold text-primary-400">RSVP</h3>
       <RSVPCountdown />
+      <p className="text-center">
+        GRRRR if you are seeing this then you are late to RSVP. Hurry up.
+      </p>
       {guestPermission === "guest" || guestPermission === "guest+family" ? (
         <InfoBanner
           variant="secondary"
