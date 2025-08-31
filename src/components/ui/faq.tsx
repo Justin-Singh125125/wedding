@@ -10,6 +10,17 @@ type FAQItem = {
 
 const faqs: FAQItem[] = [
   {
+    id: 1234,
+    question: "Are guests allowed to request a song?",
+    answer:
+      "Yes! Please use the link provided to submit your song request. We’ll do our best to include it during the wedding, unless it’s a song we feel isn’t a good fit for the event. \nDate: 09/20/2025\nPassword: ezdjspk",
+    link: {
+      text: "Request a Song",
+      url: "https://mydjeventplanner.info/requests.asp?djidnumber=9179",
+    },
+  },
+
+  {
     id: 1,
     question: "Will children be allowed?",
     answer:

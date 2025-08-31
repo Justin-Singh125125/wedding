@@ -349,10 +349,10 @@ export const RSVPForm = () => {
     <div className="w-full space-y-4 rounded-lg bg-white p-6 shadow-2xl">
       <h3 className="text-center font-bold text-primary-400">RSVP</h3>
       <RSVPCountdown />
-      <p className="text-center">
-        GRRRR if you are seeing this then you are late to RSVP. Hurry up.
+      <p className="text-center text-lg font-bold text-red-400">
+        RSVP section has been closed!
       </p>
-      {guestPermission === "guest" || guestPermission === "guest+family" ? (
+      {/* {guestPermission === "guest" || guestPermission === "guest+family" ? (
         <InfoBanner
           variant="secondary"
           message="Do not share the link to this website and be mindful when adding guests."
@@ -455,7 +455,7 @@ export const RSVPForm = () => {
         >
           Submit RSVP
         </Button>
-      </form>
+      </form> */}
     </div>
   );
 };
